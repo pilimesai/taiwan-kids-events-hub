@@ -53,12 +53,13 @@ export default function Header({
             <div className="header-quick-tags">
               <span className="quick-tags-label">熱門關鍵字：</span>
               {[
+                { label: '🎭 如果劇團', query: '如果兒童劇團' },
+                { label: '🐷 豬探長', query: '豬探長' },
+                { label: '🎭 兒童劇團', query: '劇團' },
                 { label: '🎃 萬聖節', query: '萬聖' },
                 { label: '🎄 耶誕城', query: '耶誕' },
                 { label: '🐶 史努比', query: '史努比' },
-                { label: '🦖 恐龍展', query: '恐龍' },
-                { label: '🎭 紙風車', query: '紙風車' },
-                { label: '🏛️ 圖書館', query: '圖書館' }
+                { label: '🦖 恐龍展', query: '恐龍' }
               ].map(item => (
                 <button
                   key={item.query}
