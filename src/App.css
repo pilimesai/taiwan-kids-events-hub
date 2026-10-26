@@ -15,11 +15,18 @@
 .header-container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 14px 24px;
+  padding: 12px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+}
+
+.header-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
 
 .brand-group {
@@ -2134,21 +2141,325 @@
   }
 }
 
+/* ==========================================================================
+   手機與平板極致好讀最佳化 (Mobile Reading & Ergonomics Experience)
+   ========================================================================== */
 @media (max-width: 900px) {
+  /* 1. 頂部導航列不再霸佔半張螢幕，保持滑順滾動 */
+  .app-header {
+    position: relative;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05);
+  }
+
   .header-container {
     flex-direction: column;
     align-items: stretch;
+    padding: 10px 14px;
+    gap: 8px;
   }
-  .header-actions {
-    max-width: 100%;
-    flex-wrap: wrap;
+
+  .header-top-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
   }
+
+  .brand-group {
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .brand-logo-wrap {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+  }
+
+  .brand-title-row {
+    gap: 6px;
+  }
+
+  .brand-title {
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .brand-pill-beta {
+    font-size: 10px;
+    padding: 1px 6px;
+  }
+
+  .brand-subtitle {
+    display: none; /* 手機版隱藏落落長的副標題，大幅釋放垂直閱讀空間 */
+  }
+
+  .header-quick-btns {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .btn-radar-alert,
+  .btn-favorites {
+    padding: 5px 9px;
+    font-size: 11px;
+    gap: 4px;
+  }
+
+  .radar-count-tag,
+  .fav-count-tag {
+    font-size: 10px;
+    padding: 1px 5px;
+  }
+
+  /* 2. 搜尋列 100% 寬度與單行橫向滑動熱門關鍵字 */
   .header-search-bar {
+    width: 100%;
     max-width: 100%;
   }
 
+  .search-input {
+    padding: 8px 90px 8px 34px;
+    font-size: 13px;
+  }
+
+  .search-submit-btn {
+    padding: 5px 10px;
+    font-size: 11.5px;
+  }
+
+  .header-quick-tags {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-top: 5px;
+    padding-bottom: 2px;
+  }
+
+  .header-quick-tags::-webkit-scrollbar {
+    display: none;
+  }
+
+  .quick-tag-btn {
+    flex-shrink: 0;
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  /* 3. 搶票雷達卡片改為滑動式 Carousel，不霸佔手機垂直高度 */
+  .ticket-radar-section {
+    padding: 14px;
+    border-radius: var(--radius-lg);
+  }
+
+  .radar-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .radar-title {
+    font-size: 16px;
+  }
+
+  .radar-desc {
+    font-size: 12px;
+  }
+
+  .radar-badge-pulse {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .radar-cards-scroll {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    grid-template-columns: none;
+  }
+
+  .radar-cards-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .radar-card {
+    flex: 0 0 260px;
+    scroll-snap-align: start;
+    padding: 12px;
+    border-radius: var(--radius-md);
+  }
+
+  .radar-event-title {
+    font-size: 13.5px;
+  }
+
+  /* 4. IG 達人專欄改為流暢左右橫向卡片滑動 */
+  .ig-curators-section {
+    padding: 14px;
+    border-radius: var(--radius-lg);
+  }
+
+  .ig-section-title {
+    font-size: 16px;
+  }
+
+  .ig-section-desc {
+    font-size: 12px;
+  }
+
+  .ig-cards-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    grid-template-columns: none;
+  }
+
+  .ig-cards-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ig-curator-card {
+    flex: 0 0 265px;
+    scroll-snap-align: start;
+    padding: 12px;
+    border-radius: var(--radius-md);
+  }
+
+  .curator-desc {
+    font-size: 11.5px;
+  }
+
+  /* 5. 篩選標籤橫向滑動與簡潔排版 */
+  .filter-panel {
+    padding: 14px;
+    border-radius: var(--radius-lg);
+    gap: 12px;
+  }
+
+  .filter-section-title {
+    font-size: 13px;
+  }
+
+  .category-chips-list {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .category-chips-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-chip {
+    flex-shrink: 0;
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .age-filter-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .age-presets-list {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding-bottom: 2px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .age-presets-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .age-chip {
+    flex-shrink: 0;
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  .conditions-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .condition-item {
+    width: 100%;
+  }
+
+  .condition-select {
+    width: 100%;
+  }
+
+  .condition-toggle {
+    margin-left: 0;
+    margin-top: 4px;
+  }
+
+  .filter-execute-search-btn {
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+
+  /* 6. 手機底部懸浮模式切換鈕（地圖 / 列表隨心切換） */
   .mobile-view-tabs {
     display: flex;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    background: rgba(15, 23, 42, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 24px -2px rgba(0, 0, 0, 0.35);
+    border-radius: 9999px;
+    padding: 4px;
+    width: auto;
+    min-width: 260px;
+  }
+
+  .mobile-tab-btn {
+    color: #cbd5e1;
+    font-size: 12px;
+    padding: 7px 14px;
+  }
+
+  .mobile-tab-btn.active {
+    background: #0284c7;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(2, 132, 199, 0.5);
   }
 
   .explorer-grid-layout {
@@ -2157,44 +2468,102 @@
 
   .map-column {
     display: none;
-    margin-bottom: 24px;
     position: static;
   }
 
   .events-column {
     display: none;
+    padding-bottom: 70px; /* 預留底部懸浮按鈕空間，不遮擋最後一張卡片 */
   }
 
-  .map-column.mobile-show,
+  .map-column.mobile-show {
+    display: block;
+    padding-bottom: 70px;
+  }
+
   .events-column.mobile-show {
     display: block;
   }
 
-  .war-room-grid {
-    grid-template-columns: 1fr;
+  .map-svg-container {
+    height: 380px;
   }
-}
 
-@media (max-width: 640px) {
+  /* 7. 活動卡片更符合手機單手瀏覽比例 */
   .main-content-layout {
-    padding: 14px;
-    gap: 16px;
+    padding: 12px;
+    gap: 14px;
   }
-  .radar-cards-scroll {
-    grid-template-columns: 1fr;
-  }
+
   .events-cards-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
-  .filter-panel {
-    padding: 16px;
+
+  .event-card {
+    border-radius: 16px;
   }
+
+  .event-card-media {
+    height: 165px;
+  }
+
+  .event-card-body {
+    padding: 12px 14px;
+    gap: 7px;
+  }
+
+  .event-card-title {
+    font-size: 15px;
+    line-height: 1.38;
+  }
+
+  .event-venue-row,
+  .event-date-row {
+    font-size: 12px;
+  }
+
+  .event-card-highlights li {
+    font-size: 11.5px;
+  }
+
+  /* 8. 活動詳情彈窗手機版（Bottom Sheet 抽屜式體驗） */
+  .modal-backdrop {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal-container {
+    max-height: 90vh;
+    border-radius: 24px 24px 0 0;
+    max-width: 100%;
+  }
+
   .modal-hero {
-    height: 190px;
-    padding: 16px;
+    height: 175px;
+    padding: 14px;
   }
+
   .modal-title {
-    font-size: 17px;
+    font-size: 16px;
+  }
+
+  .modal-content-scroll {
+    padding: 14px 16px 24px;
+    gap: 16px;
+  }
+
+  .war-room-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .modal-actions-bar {
+    position: sticky;
+    bottom: 0;
+    background: #ffffff;
+    padding: 10px 0 0;
+    border-top: 1px solid #f1f5f9;
   }
 }
 
@@ -2445,10 +2814,4 @@
   border-radius: 9999px;
   font-size: 11px;
   font-weight: 800;
-}
-
-@media (max-width: 900px) {
-  .ig-cards-grid {
-    grid-template-columns: 1fr;
-  }
 }
