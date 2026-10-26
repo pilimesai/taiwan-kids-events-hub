@@ -1,0 +1,26 @@
+{
+  "name": "台灣親子玩聚地圖",
+  "short_name": "親子地圖",
+  "description": "全台親子活動情報站，以台灣地圖選取探索近2個月精彩親子展覽、劇團表演與節慶情報。",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FF7A59",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "./apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
