@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapPin, Sparkles, Navigation, Layers } from 'lucide-react';
+import { MapPin, Sparkles, Navigation } from 'lucide-react';
 import { REGIONS } from '../data/mockEvents';
 
 // 定義精確美觀的台灣縣市 SVG 路徑及定位中心點
@@ -129,13 +129,6 @@ const TAIWAN_COUNTIES = [
   }
 ];
 
-// 外島離島群組（獨立可點擊區域）
-const ISLANDS = [
-  { id: '澎湖縣', name: '澎湖縣', region: 'islands', x: 75, y: 350, radius: 24, countKey: '澎湖縣' },
-  { id: '金門縣', name: '金門縣', region: 'islands', x: 65, y: 220, radius: 20, countKey: '金門縣' },
-  { id: '連江縣', name: '連江縣(馬祖)', region: 'islands', x: 65, y: 110, radius: 18, countKey: '連江縣' }
-];
-
 export default function TaiwanMap({
   selectedCounty,
   onSelectCounty,
@@ -240,34 +233,6 @@ export default function TaiwanMap({
 
       {/* 地圖互動主視窗 */}
       <div className="map-svg-container">
-        {/* 地圖左上離島外框提示 */}
-        <div className="islands-box">
-          <div className="islands-header">
-            <Layers size={13} />
-            <span>外島離島</span>
-          </div>
-          <div className="islands-list">
-            {ISLANDS.map(isle => {
-              const count = countyCounts[isle.countKey] || 0;
-              const isSelected = selectedCounty === isle.countKey;
-              return (
-                <button
-                  key={isle.id}
-                  type="button"
-                  className={`island-btn ${isSelected ? 'active' : ''} ${count > 0 ? 'has-events' : ''}`}
-                  onClick={() => handleCountyClick(isle.countKey)}
-                  onMouseEnter={() => setHoveredCounty(isle.countKey)}
-                  onMouseLeave={() => setHoveredCounty(null)}
-                >
-                  <span className="island-name">{isle.name}</span>
-                  <span className={`island-count ${count > 0 ? 'highlight' : ''}`}>
-                    {count} 檔
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
 
         {/* SVG 地圖主體 */}
         <svg

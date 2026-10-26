@@ -27,13 +27,6 @@ export const REGIONS = {
     shortName: '東部',
     counties: ['花蓮縣', '臺東縣'],
     color: '#8B5CF6'
-  },
-  islands: {
-    id: 'islands',
-    name: '外島地區',
-    shortName: '外島',
-    counties: ['澎湖縣', '金門縣', '連江縣'],
-    color: '#EC4899'
   }
 };
 
@@ -687,36 +680,6 @@ export const MOCK_EVENTS = [
     ],
     notice: '高山海拔約 1750 公尺，秋冬午後氣溫下降迅速，請務必幫孩子帶足保暖衣物與帽子。',
     organizer: '國軍退除役官兵輔導委員會 清境農場'
-  },
-  {
-    id: 'evt-21',
-    title: '【澎湖生活博物館】菊島冬遊特展：石滬堆砌小工匠與海龜守護者',
-    category: 'government',
-    region: 'islands',
-    county: '澎湖縣',
-    venue: '澎湖生活博物館 2F特展區與兒童探索館',
-    address: '澎湖縣馬公市新生路327號',
-    eventStartDate: '2026-11-15',
-    eventEndDate: '2026-12-30',
-    bookingStatus: 'free_walkin',
-    bookingOpenDate: '2026-11-15 09:00',
-    bookingPlatform: '自由購票入館，免預約梯次',
-    bookingUrl: 'https://www.phhcc.gov.tw',
-    ticketPrice: '全票 NT$ 80 / 6歲以下免費',
-    isFree: false,
-    minAge: 3,
-    maxAge: 12,
-    ageLabel: '3-12 歲親子',
-    indoorOutdoor: 'indoor',
-    indoorOutdoorLabel: '全館室內・避風避冷首選',
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80',
-    highlights: [
-      '以玄武岩積木拼裝雙心石滬模型，了解祖先捕魚智慧',
-      '海龜救傷沉浸式互動裝置，扮演海洋獸醫師搶救小綠蠵龜',
-      '冬天的澎湖避開東北季風的室內文化好去處'
-    ],
-    notice: '開館時間每週四至週二 09:00-17:00（週三休館），適合秋冬安排於澎湖行程中。',
-    organizer: '澎湖縣政府文化局'
   },
   {
     id: 'evt-22',
