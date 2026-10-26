@@ -21,8 +21,8 @@ export default function Header({
     <header className="app-header">
       <div className="header-container">
         <div className="brand-group">
-          <div className="brand-logo-wrap">
-            <span className="brand-logo-icon">🎈</span>
+          <div className="brand-logo-wrap" title="台灣親子玩聚地圖">
+            <img src="./favicon.svg" alt="台灣親子玩聚地圖 Logo" className="brand-logo-img" />
           </div>
           <div>
             <div className="brand-title-row">
