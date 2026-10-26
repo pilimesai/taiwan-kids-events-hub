@@ -52,14 +52,21 @@ export default function Header({
             )}
             <div className="header-quick-tags">
               <span className="quick-tags-label">熱門關鍵字：</span>
-              {['萬聖節', '恐龍', '紙風車', '市立圖書館', '積木', '泡泡'].map(tag => (
+              {[
+                { label: '🎃 萬聖節', query: '萬聖' },
+                { label: '🎄 耶誕城', query: '耶誕' },
+                { label: '🐶 史努比', query: '史努比' },
+                { label: '🦖 恐龍展', query: '恐龍' },
+                { label: '🎭 紙風車', query: '紙風車' },
+                { label: '🏛️ 圖書館', query: '圖書館' }
+              ].map(item => (
                 <button
-                  key={tag}
+                  key={item.query}
                   type="button"
-                  className={`quick-tag-btn ${searchTerm === tag ? 'active' : ''}`}
-                  onClick={() => onSearchChange(searchTerm === tag ? '' : tag)}
+                  className={`quick-tag-btn ${searchTerm === item.query ? 'active' : ''}`}
+                  onClick={() => onSearchChange(searchTerm === item.query ? '' : item.query)}
                 >
-                  {tag === '萬聖節' ? `🎃 ${tag}` : tag === '恐龍' ? `🦖 ${tag}` : tag}
+                  {item.label}
                 </button>
               ))}
             </div>
