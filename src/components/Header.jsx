@@ -4,11 +4,19 @@ import { Sparkles, Calendar, BellRing, Bookmark, Search, Baby } from 'lucide-rea
 export default function Header({
   searchTerm,
   onSearchChange,
+  onExecuteSearch,
   urgentCount = 0,
   favoriteCount = 0,
   onOpenFavorites,
   onScrollToRadar
 }) {
+  const handleSubmit = (e) => {
+    e?.preventDefault?.();
+    if (onExecuteSearch) {
+      onExecuteSearch();
+    }
+  };
+
   return (
     <header className="app-header">
       <div className="header-container">
@@ -33,23 +41,34 @@ export default function Header({
         {/* 搜尋與操作工具列 */}
         <div className="header-actions">
           <div className="header-search-bar">
-            <Search className="search-icon" size={16} />
-            <input
-              type="text"
-              placeholder="搜尋活動名稱、恐龍、劇團、市立圖書館、商場..."
-              value={searchTerm}
-              onChange={(e) => onSearchChange(e.target.value)}
-              className="search-input"
-            />
-            {searchTerm && (
+            <form className="search-input-wrapper" onSubmit={handleSubmit}>
+              <Search className="search-icon" size={16} />
+              <input
+                type="text"
+                placeholder="搜尋活動、恐龍、劇團、商場..."
+                value={searchTerm}
+                onChange={(e) => onSearchChange(e.target.value)}
+                className="search-input"
+              />
+              {searchTerm && (
+                <button
+                  type="button"
+                  className="search-clear-btn"
+                  onClick={() => onSearchChange('')}
+                  title="清除搜尋文字"
+                >
+                  ✕
+                </button>
+              )}
               <button
-                type="button"
-                className="search-clear-btn"
-                onClick={() => onSearchChange('')}
+                type="submit"
+                className="search-submit-btn"
+                title="立即搜尋全台活動"
               >
-                ✕
+                <Search size={13} />
+                <span>開始搜尋</span>
               </button>
-            )}
+            </form>
             <div className="header-quick-tags">
               <span className="quick-tags-label">熱門關鍵字：</span>
               {[

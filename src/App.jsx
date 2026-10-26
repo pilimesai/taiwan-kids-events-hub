@@ -178,12 +178,26 @@ export default function App() {
     }
   };
 
+  const handleExecuteSearch = (optionalTerm) => {
+    if (typeof optionalTerm === 'string') {
+      setSearchTerm(optionalTerm);
+    }
+    setMobileTab('list');
+    setTimeout(() => {
+      const el = document.getElementById('events-results-section') || document.querySelector('.events-column');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 60);
+  };
+
   return (
     <div className="app-root">
       {/* 頂部導航 */}
       <Header
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
+        onExecuteSearch={handleExecuteSearch}
         urgentCount={urgentEvents.length}
         favoriteCount={favorites.length}
         onOpenFavorites={() => setIsFavoritesDrawerOpen(true)}
@@ -224,6 +238,7 @@ export default function App() {
           indoorFilter={indoorFilter}
           onIndoorFilterChange={setIndoorFilter}
           totalResultsCount={filteredEvents.length}
+          onExecuteSearch={handleExecuteSearch}
         />
 
         {/* 手機版模式切換標籤 (地圖 / 列表) */}
@@ -262,7 +277,10 @@ export default function App() {
           </aside>
 
           {/* 右欄：活動清單列表 */}
-          <section className={`events-column ${mobileTab === 'list' ? 'mobile-show' : ''}`}>
+          <section
+            id="events-results-section"
+            className={`events-column ${mobileTab === 'list' ? 'mobile-show' : ''}`}
+          >
             <div className="results-header-bar">
               <div className="results-stats">
                 <span className="results-count-number">{filteredEvents.length}</span>

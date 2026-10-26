@@ -13,7 +13,8 @@ import {
   Filter,
   Check,
   Umbrella,
-  Ticket
+  Ticket,
+  Search
 } from 'lucide-react';
 import { CATEGORIES, AGE_PRESETS } from '../data/mockEvents';
 
@@ -46,7 +47,8 @@ export default function FilterBar({
   onToggleOnlyFree,
   indoorFilter,
   onIndoorFilterChange,
-  totalResultsCount = 0
+  totalResultsCount = 0,
+  onExecuteSearch
 }) {
   return (
     <div className="filter-panel">
@@ -187,6 +189,18 @@ export default function FilterBar({
             </label>
           </div>
         </div>
+      </div>
+
+      {/* 底部開始搜尋按鈕 */}
+      <div className="filter-search-footer">
+        <button
+          type="button"
+          className="filter-execute-search-btn"
+          onClick={() => onExecuteSearch?.()}
+        >
+          <Search size={16} />
+          <span>開始搜尋符合條件活動（即時彙整 {totalResultsCount} 檔）</span>
+        </button>
       </div>
     </div>
   );
