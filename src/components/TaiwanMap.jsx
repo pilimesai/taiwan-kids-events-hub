@@ -33,18 +33,13 @@ const TAIWAN_COUNTIES = [
     path: 'M 292,102 L 316,132 L 324,162 L 308,188 L 278,168 L 268,138 L 278,112 Z'
   },
   {
-    id: '新竹市',
-    name: '新竹市',
+    id: '新竹',
+    name: '新竹',
+    displayName: '新竹',
+    fullName: '新竹縣市',
     region: 'north',
-    center: [256, 172],
-    path: 'M 250,165 L 268,166 L 266,182 L 248,180 Z'
-  },
-  {
-    id: '新竹縣',
-    name: '新竹縣',
-    region: 'north',
-    center: [282, 190],
-    path: 'M 268,165 L 278,168 L 308,188 L 300,218 L 275,225 L 260,198 L 268,182 Z'
+    center: [275, 185],
+    path: 'M 248,165 L 278,168 L 308,188 L 300,218 L 275,225 L 255,200 L 246,180 Z'
   },
   {
     id: '宜蘭縣',
@@ -89,18 +84,13 @@ const TAIWAN_COUNTIES = [
     path: 'M 198,345 L 242,352 L 255,388 L 220,405 L 178,390 L 180,362 Z'
   },
   {
-    id: '嘉義市',
-    name: '嘉義市',
+    id: '嘉義',
+    name: '嘉義',
+    displayName: '嘉義',
+    fullName: '嘉義縣市',
     region: 'south',
-    center: [215, 412],
-    path: 'M 208,405 L 225,404 L 224,418 L 208,416 Z'
-  },
-  {
-    id: '嘉義縣',
-    name: '嘉義縣',
-    region: 'south',
-    center: [235, 425],
-    path: 'M 178,392 L 220,404 L 258,388 L 285,410 L 275,448 L 230,455 L 185,442 L 170,418 Z'
+    center: [225, 420],
+    path: 'M 170,418 L 178,392 L 220,404 L 258,388 L 285,410 L 275,448 L 230,455 L 185,442 Z'
   },
   {
     id: '臺南市',
@@ -155,18 +145,28 @@ export default function TaiwanMap({
 }) {
   const [hoveredCounty, setHoveredCounty] = useState(null);
 
-  // 計算各縣市活動數
+  // 計算各縣市活動數（自動彙整新竹縣市、嘉義縣市）
   const countyCounts = React.useMemo(() => {
     const counts = {};
     events.forEach(evt => {
       counts[evt.county] = (counts[evt.county] || 0) + 1;
+      if (evt.county.includes('新竹')) {
+        counts['新竹'] = (counts['新竹'] || 0) + 1;
+      }
+      if (evt.county.includes('嘉義')) {
+        counts['嘉義'] = (counts['嘉義'] || 0) + 1;
+      }
     });
     return counts;
   }, [events]);
 
   // 取得縣市主要活動預覽
-  const getTopEventForCounty = (countyName) => {
-    return events.find(e => e.county === countyName);
+  const getTopEventForCounty = (countyKey) => {
+    return events.find(e =>
+      e.county === countyKey ||
+      (countyKey === '新竹' && e.county.includes('新竹')) ||
+      (countyKey === '嘉義' && e.county.includes('嘉義'))
+    );
   };
 
   const handleCountyClick = (countyId) => {
@@ -187,7 +187,7 @@ export default function TaiwanMap({
   };
 
   const activeHoverData = hoveredCounty ? {
-    name: hoveredCounty,
+    name: hoveredCounty === '新竹' ? '新竹縣市' : hoveredCounty === '嘉義' ? '嘉義縣市' : hoveredCounty,
     count: countyCounts[hoveredCounty] || 0,
     topEvent: getTopEventForCounty(hoveredCounty)
   } : null;
@@ -397,7 +397,7 @@ export default function TaiwanMap({
           <span className="status-label">當前地區：</span>
           <span className="status-value">
             {selectedCounty !== 'all' ? (
-              <strong>{selectedCounty}</strong>
+              <strong>{selectedCounty === '新竹' ? '新竹縣市' : selectedCounty === '嘉義' ? '嘉義縣市' : selectedCounty}</strong>
             ) : selectedRegion !== 'all' ? (
               <strong>{REGIONS[selectedRegion]?.name || '指定區域'}</strong>
             ) : (
@@ -406,7 +406,11 @@ export default function TaiwanMap({
           </span>
           <span className="status-badge">
             {events.filter(e => {
-              if (selectedCounty !== 'all') return e.county === selectedCounty;
+              if (selectedCounty !== 'all') {
+                if (selectedCounty === '新竹') return e.county.includes('新竹');
+                if (selectedCounty === '嘉義') return e.county.includes('嘉義');
+                return e.county === selectedCounty;
+              }
               if (selectedRegion !== 'all') return REGIONS[selectedRegion]?.counties.includes(e.county);
               return true;
             }).length} 檔活動

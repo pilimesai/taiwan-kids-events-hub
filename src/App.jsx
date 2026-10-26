@@ -79,7 +79,13 @@ export default function App() {
     return MOCK_EVENTS.filter(evt => {
       // 1. 地區與縣市
       if (selectedCounty !== 'all') {
-        if (evt.county !== selectedCounty) return false;
+        if (selectedCounty === '新竹' || selectedCounty === '新竹縣市') {
+          if (!evt.county.includes('新竹')) return false;
+        } else if (selectedCounty === '嘉義' || selectedCounty === '嘉義縣市') {
+          if (!evt.county.includes('嘉義')) return false;
+        } else if (evt.county !== selectedCounty) {
+          return false;
+        }
       } else if (selectedRegion !== 'all') {
         const allowedCounties = REGIONS[selectedRegion]?.counties || [];
         if (!allowedCounties.includes(evt.county)) return false;
