@@ -2110,3 +2110,258 @@
     font-size: 17px;
   }
 }
+
+/* ==========================================================================
+   IG 社群達人每週推薦專欄 (Instagram Influencer Curators)
+   ========================================================================== */
+.ig-curators-section {
+  background: linear-gradient(135deg, #ffffff 0%, #fff7ed 50%, #fdf2f8 100%);
+  border: 1px solid #fed7aa;
+  border-radius: var(--radius-xl);
+  padding: 22px 24px;
+  box-shadow: 0 4px 20px -2px rgba(249, 115, 22, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.ig-curators-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ig-curators-header {
+  margin-bottom: 18px;
+}
+
+.ig-header-title-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.ig-logo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(225, 48, 108, 0.3);
+  flex-shrink: 0;
+}
+
+.ig-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.ig-section-title {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--color-slate-900);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.ig-hot-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #fdf2f8;
+  color: #db2777;
+  border: 1px solid #fbcfe8;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 9999px;
+}
+
+.ig-section-desc {
+  font-size: 13px;
+  color: var(--color-slate-600);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.ig-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.ig-curator-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  position: relative;
+}
+
+.ig-curator-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent-color, #f59e0b);
+  box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.1);
+}
+
+.ig-curator-card.active {
+  border-color: var(--accent-color, #f59e0b);
+  background: #fffbeb;
+  box-shadow: 0 0 0 2px var(--accent-color, #f59e0b), 0 8px 20px -4px rgba(245, 158, 11, 0.25);
+}
+
+.curator-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.curator-avatar-badge {
+  font-size: 26px;
+  line-height: 1;
+  padding: 8px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.curator-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.curator-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 3px;
+}
+
+.curator-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--color-slate-900);
+  margin: 0;
+}
+
+.curator-badge-pill {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--color-slate-700);
+  background: #f1f5f9;
+  padding: 2px 7px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.curator-handle {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #db2777;
+}
+
+.curator-desc {
+  font-size: 12.5px;
+  color: var(--color-slate-600);
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+}
+
+.curator-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.curator-filter-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.curator-filter-btn:hover {
+  background: #334155;
+}
+
+.curator-filter-btn.selected {
+  background: #f59e0b;
+  color: #ffffff;
+}
+
+.curator-ig-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--color-slate-600);
+  background: #f1f5f9;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.curator-ig-link:hover {
+  background: #e2e8f0;
+  color: #db2777;
+}
+
+/* 卡片與彈窗上的達人標籤 */
+.curator-badge-chip {
+  background: linear-gradient(135deg, #fce7f3 0%, #fee2e2 100%);
+  color: #be185d;
+  border: 1px solid #fbcfe8;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 10px;
+  font-weight: 800;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.modal-curator-chip {
+  background: linear-gradient(135deg, #fdf2f8 0%, #fef3c7 100%);
+  color: #b45309;
+  border: 1px solid #fde68a;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .ig-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}

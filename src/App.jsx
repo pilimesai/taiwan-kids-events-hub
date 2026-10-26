@@ -9,6 +9,7 @@ import TaiwanMap from './components/TaiwanMap';
 import Header from './components/Header';
 import FilterBar from './components/FilterBar';
 import TicketRadarBanner from './components/TicketRadarBanner';
+import IgInfluencersBanner from './components/IgInfluencersBanner';
 import EventCard from './components/EventCard';
 import EventModal from './components/EventModal';
 import FavoritesDrawer from './components/FavoritesDrawer';
@@ -194,6 +195,18 @@ export default function App() {
         <TicketRadarBanner
           urgentEvents={urgentEvents}
           onSelectEvent={setActiveModalEvent}
+        />
+
+        {/* 熱門親子 IG / 社群達人每週推薦專欄 */}
+        <IgInfluencersBanner
+          activeCuratorQuery={searchTerm}
+          onSelectCurator={(query) => {
+            setSearchTerm(query);
+            // 當選取達人時，重設其他過嚴篩選以確保活動能完整展示
+            if (query) {
+              setSelectedCategory('all');
+            }
+          }}
         />
 
         {/* 綜合篩選工具區 (年齡、類型、搶票條件) */}

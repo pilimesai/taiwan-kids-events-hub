@@ -121,6 +121,11 @@ export default function EventModal({
               <Umbrella size={12} />
               {event.indoorOutdoorLabel}
             </span>
+            {event.curator && (
+              <span className="modal-curator-chip">
+                📸 {event.curator} 精選推薦
+              </span>
+            )}
           </div>
 
           <h2 className="modal-title">{event.title}</h2>

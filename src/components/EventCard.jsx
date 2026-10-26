@@ -60,6 +60,11 @@ export default function EventCard({
             <MapPin size={11} />
             {event.county}
           </span>
+          {event.curator && (
+            <span className="curator-badge-chip">
+              📸 {event.curator}
+            </span>
+          )}
         </div>
 
         {/* 收藏按鈕 */}
