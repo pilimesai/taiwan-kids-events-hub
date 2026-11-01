@@ -4216,6 +4216,40 @@
     "sourceWebName": "OPENTIX兩廳院文化生活"
   },
   {
+    "id": "culture-6ad25bc426b324165c32e605",
+    "title": "《琴心相映》王宥鈞&王秉諺 鋼琴二重奏音樂會",
+    "category": "performance",
+    "region": "central",
+    "county": "臺中市",
+    "venue": "臺中國家歌劇院小劇場",
+    "address": "臺中市西屯區惠來路二段101號",
+    "eventStartDate": "2026-12-24",
+    "eventEndDate": "2026-12-24",
+    "bookingStatus": "free_walkin",
+    "bookingOpenDate": "2026-12-24 10:00",
+    "bookingPlatform": "OPENTIX兩廳院文化生活",
+    "bookingUrl": "https://www.opentix.life/program/2105210272330326016",
+    "ticketPrice": "免費入場（免門票）",
+    "isFree": true,
+    "minAge": 0,
+    "maxAge": 99,
+    "ageLabel": "全年齡親子皆宜",
+    "indoorOutdoor": "indoor",
+    "indoorOutdoorLabel": "室內專業場館・風雨無阻",
+    "image": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80",
+    "highlights": [
+      "演出場館：臺中國家歌劇院小劇場",
+      "場次時間：2026/12/24 19:00",
+      "公家免門票或藝文推廣自由入場",
+      "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
+    ],
+    "notice": "詳情請見官方購票售票系統或主辦單位最新公告。開演前請依場館規範提早入場。",
+    "organizer": "OPENTIX兩廳院文化生活",
+    "isLiveApi": true,
+    "sourceType": "culture_tw",
+    "sourceWebName": "OPENTIX兩廳院文化生活"
+  },
+  {
     "id": "culture-6ad6504b26b3245efc7536ad",
     "title": "HSO市民管弦樂團定期音樂會系列二",
     "category": "performance",
@@ -8477,7 +8511,7 @@
     "eventEndDate": "2026-12-31",
     "bookingStatus": "booking_open",
     "bookingOpenDate": "2026-01-01 10:00",
-    "bookingPlatform": "全國���文活動資訊系統",
+    "bookingPlatform": "全國藝文活動資訊系統",
     "bookingUrl": "https://www.nmns.edu.tw/park_cfpp/",
     "ticketPrice": "NT$ 全票+50;團體票（20人以上）+30;優待票+30;6 歲以上，未滿 12 歲兒童+25",
     "isFree": false,
@@ -8497,7 +8531,7 @@
     "organizer": "國立自然科學博物館車籠埔斷層保存園區",
     "isLiveApi": true,
     "sourceType": "culture_tw",
-    "sourceWebName": "全國���文活動資訊系統"
+    "sourceWebName": "全國藝文活動資訊系統"
   },
   {
     "id": "culture-6941cd8a26b32416dc348d6d",
