@@ -131,6 +131,11 @@ export default function EventModal({
                 🏛️ 文化部即時開放資料
               </span>
             )}
+            {event.sourceType === 'department_store' && (
+              <span className="modal-dept-chip" title="全台各大百貨商場最新親子特展快訊">
+                🛍️ 各大百貨商場特展快閃
+              </span>
+            )}
           </div>
 
           <h2 className="modal-title">{event.title}</h2>

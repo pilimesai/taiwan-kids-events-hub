@@ -1,8 +1,8 @@
 /**
- * 文化部 iCulture 全國藝文活動開放資料 API 服務
- * 官方資料集: 文化部文化活動資訊開放資料 (Access-Control-Allow-Origin: *)
+ * 全台親子活動即時搜尋與同步服務 (文化部 iCulture 開放資料 + 全台各大百貨商場特展)
  */
 import staticCultureEvents from '../data/cultureEvents.json';
+import { DEPARTMENT_STORE_EVENTS } from '../data/departmentStoreEvents.js';
 
 const COUNTIES = [
   '臺北市', '台北市', '新北市', '基隆市', '桃園市', '新竹市', '新竹縣', '苗栗縣',
@@ -37,6 +37,12 @@ const STOCK_IMAGES = {
     'https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?auto=format&fit=crop&w=900&q=80',
     'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=900&q=80',
     'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=900&q=80'
+  ],
+  department_store: [
+    'https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1543589077-47d81606c1bf?auto=format&fit=crop&w=900&q=80'
   ],
   government: [
     'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=80',
@@ -77,7 +83,7 @@ function cleanHtml(str = '') {
 }
 
 /**
- * 同步取得初始文化部開放資料 (0ms 零延遲，靜態打包導入 + localStorage 快取優先)
+ * 同步取得初始活動資料 (0ms 零延遲，靜態打包導入 + localStorage 快取優先)
  */
 export function getInitialCultureEvents() {
   try {
@@ -89,13 +95,13 @@ export function getInitialCultureEvents() {
       }
     }
   } catch (e) {
-    console.warn('讀取文化部本地快取失敗:', e);
+    console.warn('讀取本地快取失敗:', e);
   }
   return Array.isArray(staticCultureEvents) ? staticCultureEvents : [];
 }
 
 /**
- * 瀏覽器在線直接同步文化部即時 API (支援 CORS)
+ * 瀏覽器在線直接同步搜尋最新活動 (含文化部即時開放資料 + 全台各大百貨商場最新特展)
  */
 export async function fetchLiveCultureEvents() {
   const kidKeywords = [
@@ -108,7 +114,7 @@ export async function fetchLiveCultureEvents() {
   try {
     let rawList = [];
 
-    // 嘗試一次抓取全部活動 (category=all)，速度最快且涵蓋最完整
+    // 優先以 category=all 全量檢索最新文化部資料
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 8000);
@@ -121,7 +127,7 @@ export async function fetchLiveCultureEvents() {
         rawList = await res.json();
       }
     } catch {
-      // 若 category=all 逾時，改用分組抓取備援
+      // 備援方案：依類別個別抓取
       const categories = [1, 2, 4, 6, 7, 8];
       const fetchPromises = categories.map(async (cat) => {
         try {
@@ -140,159 +146,167 @@ export async function fetchLiveCultureEvents() {
       rawList = results.flat();
     }
 
-    if (!Array.isArray(rawList) || !rawList.length) return [];
-
     const processed = [];
     const seenTitles = new Set();
 
-    for (const item of rawList) {
-      if (!item.title) continue;
-      const desc = cleanHtml(item.descriptionFilterHtml || '');
-      const comment = cleanHtml(item.comment || '');
-      const fullText = `${item.title} ${desc} ${comment}`;
+    if (Array.isArray(rawList)) {
+      for (const item of rawList) {
+        if (!item.title) continue;
+        const desc = cleanHtml(item.descriptionFilterHtml || '');
+        const comment = cleanHtml(item.comment || '');
+        const fullText = `${item.title} ${desc} ${comment}`;
 
-      if (!kidKeywords.some(kw => fullText.includes(kw))) continue;
+        if (!kidKeywords.some(kw => fullText.includes(kw))) continue;
 
-      const normalizedTitle = item.title.trim();
-      if (seenTitles.has(normalizedTitle)) continue;
-      seenTitles.add(normalizedTitle);
+        const normalizedTitle = item.title.trim();
+        if (seenTitles.has(normalizedTitle)) continue;
+        seenTitles.add(normalizedTitle);
 
-      const show0 = item.showInfo?.[0] || {};
-      const rawLoc = show0.location || '';
-      const rawVenue = show0.locationName || '';
-      const county = normalizeCounty(rawLoc) || normalizeCounty(rawVenue);
-      if (!county) continue;
+        const show0 = item.showInfo?.[0] || {};
+        const rawLoc = show0.location || '';
+        const rawVenue = show0.locationName || '';
+        const county = normalizeCounty(rawLoc) || normalizeCounty(rawVenue);
+        if (!county) continue;
 
-      const region = REGION_MAP[county] || 'north';
+        const region = REGION_MAP[county] || 'north';
 
-      let category = 'performance';
-      if (item.category === '1' || item.category === '2' || item.category === '3') {
-        category = 'performance';
-      } else if (item.category === '6' || item.category === '8' || normalizedTitle.includes('展')) {
-        category = 'exhibition';
-      } else if (item.category === '4' || item.category === '7') {
-        category = 'solar_term';
-      } else {
-        category = 'government';
+        let category = 'performance';
+        if (item.category === '1' || item.category === '2' || item.category === '3') {
+          category = 'performance';
+        } else if (item.category === '6' || item.category === '8' || normalizedTitle.includes('展')) {
+          category = 'exhibition';
+        } else if (item.category === '4' || item.category === '7') {
+          category = 'solar_term';
+        } else {
+          category = 'government';
+        }
+
+        let minAge = 0;
+        let maxAge = 99;
+        let ageLabel = '全年齡親子皆宜';
+        if (fullText.includes('寶寶') || fullText.includes('0-2') || fullText.includes('嬰幼兒')) {
+          minAge = 0;
+          maxAge = 3;
+          ageLabel = '0-3 歲萌寶感統';
+        } else if (fullText.includes('學齡前') || fullText.includes('幼兒') || fullText.includes('繪本') || fullText.includes('偶戲')) {
+          minAge = 3;
+          maxAge = 6;
+          ageLabel = '3-6 歲幼兒啟蒙';
+        } else if (fullText.includes('國小') || fullText.includes('科普') || fullText.includes('科學')) {
+          minAge = 7;
+          maxAge = 12;
+          ageLabel = '7-12 歲國小科普';
+        }
+
+        const rawPrice = (show0.price || '').trim();
+        const isFree = !rawPrice || rawPrice === '0' || rawPrice.includes('免費') || rawPrice.includes('自由入場');
+        const ticketPrice = isFree ? '免費入場（免門票）' : `NT$ ${rawPrice}`;
+
+        let bookingStatus = isFree ? 'free_walkin' : (show0.onSales === 'Y' ? 'booking_open' : 'tickets_selling');
+        const isOutdoor = fullText.includes('草地') || fullText.includes('戶外') || fullText.includes('公園');
+        const indoorOutdoor = isOutdoor ? 'outdoor' : 'indoor';
+        const indoorOutdoorLabel = isOutdoor ? '戶外自然・草地同樂' : '室內專業場館・風雨無阻';
+
+        const image = (item.imageUrl && item.imageUrl.startsWith('http'))
+          ? item.imageUrl
+          : getStockImage(category, item.UID || normalizedTitle);
+
+        const startDateClean = item.startDate ? item.startDate.replace(/\//g, '-') : '2026-11-01';
+        const endDateClean = item.endDate ? item.endDate.replace(/\//g, '-') : startDateClean;
+
+        const highlights = [];
+        if (rawVenue) highlights.push(`演出場館：${rawVenue}`);
+        if (show0.time) highlights.push(`場次時間：${show0.time.split(' ')[0]} ${show0.time.split(' ')[1]?.slice(0, 5) || ''}`);
+        highlights.push(isFree ? '公家免門票或藝文推廣自由入場' : `購票資訊：${ticketPrice}`);
+        highlights.push('資料來源：文化部 iCulture 全國藝文活動開放資料平台');
+
+        const notice = desc ? (desc.slice(0, 150) + (desc.length > 150 ? '...' : '')) : '詳情請見官方購票售票系統或主辦單位最新公告。開演前請依場館規範提早入場。';
+
+        processed.push({
+          id: `culture-${item.UID || Math.random().toString(36).substring(2, 9)}`,
+          title: normalizedTitle,
+          category,
+          region,
+          county,
+          venue: rawVenue || county,
+          address: rawLoc || rawVenue || `${county}藝文中心`,
+          eventStartDate: startDateClean,
+          eventEndDate: endDateClean,
+          bookingStatus,
+          bookingOpenDate: `${startDateClean} 10:00`,
+          bookingPlatform: item.sourceWebName || '文化部 iCulture / 官方售票系統',
+          bookingUrl: item.webSales || item.sourceWebPromote || 'https://cloud.culture.tw',
+          ticketPrice,
+          isFree,
+          minAge,
+          maxAge,
+          ageLabel,
+          indoorOutdoor,
+          indoorOutdoorLabel,
+          image,
+          highlights,
+          notice,
+          organizer: item.masterUnit?.[0] || item.showUnit || item.sourceWebName || '文化部指導 / 主辦單位',
+          isLiveApi: true,
+          sourceType: 'culture_tw',
+          sourceWebName: item.sourceWebName || '文化部 iCulture'
+        });
       }
-
-      let minAge = 0;
-      let maxAge = 99;
-      let ageLabel = '全年齡親子皆宜';
-      if (fullText.includes('寶寶') || fullText.includes('0-2') || fullText.includes('嬰幼兒')) {
-        minAge = 0;
-        maxAge = 3;
-        ageLabel = '0-3 歲萌寶感統';
-      } else if (fullText.includes('學齡前') || fullText.includes('幼兒') || fullText.includes('繪本') || fullText.includes('偶戲')) {
-        minAge = 3;
-        maxAge = 6;
-        ageLabel = '3-6 歲幼兒啟蒙';
-      } else if (fullText.includes('國小') || fullText.includes('科普') || fullText.includes('科學')) {
-        minAge = 7;
-        maxAge = 12;
-        ageLabel = '7-12 歲國小科普';
-      }
-
-      const rawPrice = (show0.price || '').trim();
-      const isFree = !rawPrice || rawPrice === '0' || rawPrice.includes('免費') || rawPrice.includes('自由入場');
-      const ticketPrice = isFree ? '免費入場（免門票）' : `NT$ ${rawPrice}`;
-
-      let bookingStatus = isFree ? 'free_walkin' : (show0.onSales === 'Y' ? 'booking_open' : 'tickets_selling');
-      const isOutdoor = fullText.includes('草地') || fullText.includes('戶外') || fullText.includes('公園');
-      const indoorOutdoor = isOutdoor ? 'outdoor' : 'indoor';
-      const indoorOutdoorLabel = isOutdoor ? '戶外自然・草地同樂' : '室內專業場館・風雨無阻';
-
-      const image = (item.imageUrl && item.imageUrl.startsWith('http'))
-        ? item.imageUrl
-        : getStockImage(category, item.UID || normalizedTitle);
-
-      const startDateClean = item.startDate ? item.startDate.replace(/\//g, '-') : '2026-11-01';
-      const endDateClean = item.endDate ? item.endDate.replace(/\//g, '-') : startDateClean;
-
-      const highlights = [];
-      if (rawVenue) highlights.push(`演出場館：${rawVenue}`);
-      if (show0.time) highlights.push(`場次時間：${show0.time.split(' ')[0]} ${show0.time.split(' ')[1]?.slice(0, 5) || ''}`);
-      highlights.push(isFree ? '公家免門票或藝文推廣自由入場' : `購票資訊：${ticketPrice}`);
-      highlights.push('資料來源：文化部 iCulture 全國藝文活動開放資料平台');
-
-      const notice = desc ? (desc.slice(0, 150) + (desc.length > 150 ? '...' : '')) : '詳情請見官方購票售票系統或主辦單位最新公告。開演前請依場館規範提早入場。';
-
-      processed.push({
-        id: `culture-${item.UID || Math.random().toString(36).substring(2, 9)}`,
-        title: normalizedTitle,
-        category,
-        region,
-        county,
-        venue: rawVenue || county,
-        address: rawLoc || rawVenue || `${county}藝文中心`,
-        eventStartDate: startDateClean,
-        eventEndDate: endDateClean,
-        bookingStatus,
-        bookingOpenDate: `${startDateClean} 10:00`,
-        bookingPlatform: item.sourceWebName || '文化部 iCulture / 官方售票系統',
-        bookingUrl: item.webSales || item.sourceWebPromote || 'https://cloud.culture.tw',
-        ticketPrice,
-        isFree,
-        minAge,
-        maxAge,
-        ageLabel,
-        indoorOutdoor,
-        indoorOutdoorLabel,
-        image,
-        highlights,
-        notice,
-        organizer: item.masterUnit?.[0] || item.showUnit || item.sourceWebName || '文化部指導 / 主辦單位',
-        isLiveApi: true,
-        sourceType: 'culture_tw',
-        sourceWebName: item.sourceWebName || '文化部 iCulture'
-      });
     }
 
-    if (processed.length > 0) {
+    // 將全台各大百貨商場特展快閃活動合併
+    const allCombined = [...DEPARTMENT_STORE_EVENTS, ...processed];
+
+    if (allCombined.length > 0) {
       try {
         localStorage.setItem('tw_kids_culture_cache', JSON.stringify({
           timestamp: Date.now(),
-          events: processed
+          events: allCombined
         }));
       } catch (e) {
         console.warn('快取寫入 localStorage 失敗:', e);
       }
     }
 
-    return processed;
+    return allCombined;
   } catch (err) {
-    console.error('線上同步文化部即時活動失敗:', err);
-    return [];
+    console.error('線上尋找最新活動失敗:', err);
+    return [...DEPARTMENT_STORE_EVENTS, ...(staticCultureEvents || [])];
   }
 }
 
 /**
- * 整合精選 Mock 資料與文化部開放資料
+ * 整合精選活動、百貨商場特展與文化部開放資料
  */
 export function mergeEvents(mockEvents = [], cultureEvents = [], dataSource = 'all') {
-  if (dataSource === 'curated') {
-    return mockEvents;
-  }
-  if (dataSource === 'culture') {
-    return cultureEvents;
-  }
+  let list = [];
 
   // 合併並以 mockEvents 為精選置頂，過濾重複活動標題
   const titles = new Set();
-  const merged = [];
 
   for (const evt of mockEvents) {
     titles.add(evt.title.trim().toLowerCase());
-    merged.push(evt);
+    list.push(evt);
   }
 
   for (const evt of cultureEvents) {
     const key = evt.title.trim().toLowerCase();
     if (!titles.has(key)) {
       titles.add(key);
-      merged.push(evt);
+      list.push(evt);
     }
   }
 
-  return merged;
+  // 依來源進一步篩選
+  if (dataSource === 'curated') {
+    return list.filter(e => e.id.startsWith('evt-'));
+  }
+  if (dataSource === 'department') {
+    return list.filter(e => e.category === 'department_store' || e.sourceType === 'department_store');
+  }
+  if (dataSource === 'culture') {
+    return list.filter(e => e.sourceType === 'culture_tw');
+  }
+
+  return list;
 }

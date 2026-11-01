@@ -240,7 +240,19 @@ export async function syncCultureEvents() {
     processedEvents.push(eventObj);
   }
 
-  console.log(`✅ 親子精選活動處理完成，共萃取 ${processedEvents.length} 筆活動！`);
+  console.log(`✅ 親子精選活動處理完成，共萃取 ${processedEvents.length} 筆文化部活動！`);
+
+  // 加入全台各大百貨商場最新特展與快閃活動
+  let deptEvents = [];
+  try {
+    const deptModule = await import('../src/data/departmentStoreEvents.js');
+    deptEvents = deptModule.DEPARTMENT_STORE_EVENTS || [];
+    console.log(`🛍️ 已成功納入全台各大百貨商場活動: ${deptEvents.length} 檔！`);
+  } catch (err) {
+    console.warn('載入百貨商場活動失敗:', err.message);
+  }
+
+  const allCombined = [...deptEvents, ...processedEvents];
 
   // 儲存至 public/data/cultureEvents.json 與 src/data/cultureEvents.json
   const publicDir = path.resolve(__dirname, '../public/data');
@@ -250,13 +262,13 @@ export async function syncCultureEvents() {
 
   const publicFile = path.join(publicDir, 'cultureEvents.json');
   const srcFile = path.join(srcDir, 'cultureEvents.json');
-  const jsonContent = JSON.stringify(processedEvents, null, 2);
+  const jsonContent = JSON.stringify(allCombined, null, 2);
 
   fs.writeFileSync(publicFile, jsonContent, 'utf-8');
   fs.writeFileSync(srcFile, jsonContent, 'utf-8');
-  console.log(`💾 成功儲存至 ${publicFile} 與 ${srcFile}`);
+  console.log(`💾 成功儲存至 ${publicFile} 與 ${srcFile}，總計 ${allCombined.length} 檔活動！`);
 
-  return processedEvents;
+  return allCombined;
 }
 
 // 支援命令列直接執行

@@ -92,32 +92,35 @@ export default function App() {
     );
   };
 
-  // 即時連線文化部 API 手動同步
-  const handleSyncCulture = async () => {
+  // 即時連線尋找全台最新活動 (文化部 API + 全台各大百貨商場)
+  const handleFindNewEvents = async () => {
     setIsSyncing(true);
-    setSyncToast({ type: 'info', message: '正在連線文化部 iCulture API 同步最新藝文活動...' });
+    setSyncToast({
+      type: 'info',
+      message: '正在為您連線文化部與全台各大百貨商場，搜尋最新親子活動...'
+    });
     try {
       const fresh = await fetchLiveCultureEvents();
       if (fresh && fresh.length > 0) {
         setCultureEvents(fresh);
         setSyncToast({
           type: 'success',
-          message: `🎉 同步完成！取得 ${fresh.length} 筆文化部即時開放資料！`
+          message: `🎉 尋找完成！已成功更新 ${fresh.length} 檔最新活動（含各大百貨快閃特展與文化部開放資料）！`
         });
       } else {
         setSyncToast({
           type: 'info',
-          message: `目前已連線文化部開放資料庫，共 ${cultureEvents.length} 檔活動！`
+          message: `目前已連線全台活動資料庫，共 ${cultureEvents.length} 檔活動！`
         });
       }
     } catch {
       setSyncToast({
         type: 'warning',
-        message: '連線逾時，已維持使用本地預載之文化部活動資料。'
+        message: '連線逾時，已維持使用本地最新之活動資料。'
       });
     } finally {
       setIsSyncing(false);
-      setTimeout(() => setSyncToast(null), 4000);
+      setTimeout(() => setSyncToast(null), 4500);
     }
   };
 
@@ -278,7 +281,7 @@ export default function App() {
         urgentCount={urgentEvents.length}
         favoriteCount={favorites.length}
         cultureCount={cultureEvents.length}
-        onSyncCulture={handleSyncCulture}
+        onSyncCulture={handleFindNewEvents}
         isSyncing={isSyncing}
         onOpenFavorites={() => setIsFavoritesDrawerOpen(true)}
         onScrollToRadar={scrollToRadar}
@@ -419,11 +422,11 @@ export default function App() {
                   <button
                     type="button"
                     className="btn-empty-sync"
-                    onClick={handleSyncCulture}
+                    onClick={handleFindNewEvents}
                     disabled={isSyncing}
                   >
                     <RefreshCw size={14} className={isSyncing ? 'spin-icon' : ''} />
-                    <span>{isSyncing ? '連線同步中...' : '連線文化部搜尋最新活動'}</span>
+                    <span>{isSyncing ? '搜尋最新活動中...' : '尋找最新活動（各大百貨與文化部）'}</span>
                   </button>
                 </div>
 

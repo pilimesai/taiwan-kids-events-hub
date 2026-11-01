@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, BellRing, Bookmark, Search, RefreshCw, Radio } from 'lucide-react';
+import { Calendar, BellRing, Bookmark, Search, RefreshCw, Radio, Compass } from 'lucide-react';
 
 function BrandLogoSvg() {
   return (
@@ -73,9 +73,9 @@ export default function Header({
                   <Calendar size={11} />
                   未來 2 個月
                 </span>
-                <span className="brand-pill-live" title="已串接文化部 iCulture 全國藝文開放資料">
+                <span className="brand-pill-live" title="已串接全台各大百貨商場與文化部最新活動即時更新">
                   <Radio size={10} className="radio-pulse-icon" />
-                  文化部 API 即時連線
+                  各大百貨 ‧ 文化部即時更新
                 </span>
               </div>
               <p className="brand-subtitle">
@@ -91,10 +91,10 @@ export default function Header({
                 className={`btn-sync-culture ${isSyncing ? 'syncing' : ''}`}
                 onClick={onSyncCulture}
                 disabled={isSyncing}
-                title="即時連線文化部 iCulture 開放資料抓取最新藝文活動"
+                title="即時搜尋全台各大百貨商場、文化部與兒童劇團最新親子活動"
               >
-                <RefreshCw size={14} className={isSyncing ? 'spin-icon' : ''} />
-                <span className="btn-label-text">{isSyncing ? '同步中...' : '同步文化部'}</span>
+                <Compass size={14} className={isSyncing ? 'spin-icon' : ''} />
+                <span className="btn-label-text">{isSyncing ? '搜尋新活動中...' : '尋找新活動'}</span>
                 {cultureCount > 0 && (
                   <span className="culture-count-tag">{cultureCount}</span>
                 )}

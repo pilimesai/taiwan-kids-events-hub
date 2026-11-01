@@ -70,6 +70,11 @@ export default function EventCard({
               🏛️ 文化部同步
             </span>
           )}
+          {event.sourceType === 'department_store' && (
+            <span className="dept-badge-chip" title="全台各大百貨商場最新快閃特展">
+              🛍️ 百貨特展快閃
+            </span>
+          )}
         </div>
 
         {/* 收藏按鈕 */}
