@@ -42,6 +42,16 @@
 
 ---
 
+### 6. 🏛️ 文化部 iCulture 全國藝文開放資料即時連線 (Live Open Data)
+- **即時串接全國開放資料**：自動連線文化部「全國藝文活動資訊系統」API（音樂、戲劇、偶戲、展覽、工作坊）。
+- **全台 370+ 檔活動全面覆蓋**：基隆、苗栗、彰化、南投、雲林、嘉義、屏東、台東等全台各縣市全面收錄，徹底杜絕單一縣市查無活動的狀況。
+- **雙軌架構（打包極速載入 + 瀏覽器線上同步）**：
+  - 預載打包至 `public/data/cultureEvents.json`，開頁 0 秒極速秒開。
+  - 頂部導航支援「🔄 同步文化部」按鈕，隨時一鍵連線官方伺服器抓取當日最新公告。
+  - 支援 GitHub Actions 每日自動排程更新部署。
+
+---
+
 ## 🚀 快速啟動
 
 專案使用 React 19 與 Vite 構建，啟動速度極快：
@@ -53,7 +63,10 @@ cd "d:\vibe code\親子活動情報站"
 # 2. 安裝相依套件 (若已安裝可跳過)
 npm install
 
-# 3. 啟動本地開發伺服器
+# 3. 同步文化部最新藝文資料庫 (可選，build 時亦會自動執行)
+npm run sync:events
+
+# 4. 啟動本地開發伺服器
 npm run dev
 ```
 
@@ -68,13 +81,20 @@ npm run dev
 ├── index.html                  # 網頁入口與 Google Fonts (Noto Sans TC, Outfit)
 ├── package.json                # 套件設定
 ├── vite.config.js              # Vite 建置配置
+├── scripts/
+│   └── syncCultureEvents.js    # 文化部 iCulture 即時開放資料抓取腳本
+├── public/
+│   └── data/
+│       └── cultureEvents.json  # 預先同步的全台 370+ 檔藝文開放資料庫
 └── src/
     ├── main.jsx                # React 入口點
     ├── App.jsx                 # 應用程式主邏輯與狀態控管
     ├── index.css               # 全域設計系統變數與 Reset
     ├── App.css                 # 響應式佈局、卡片、地圖、彈窗與抽屜樣式
+    ├── services/
+    │   └── cultureApiService.js # 文化部 API 線上即時同步與快取服務
     ├── data/
-    │   └── mockEvents.js       # 全台 20+ 檔未來 2 個月真實感精選活動資料庫
+    │   └── mockEvents.js       # 人工精選搶票與社群達人活動資料庫
     └── components/
         ├── TaiwanMap.jsx       # 台灣互動向量 SVG 地圖與縣市活動數標籤
         ├── Header.jsx          # 頂部品牌導航、搜尋欄與快捷入口

@@ -14,7 +14,8 @@ import {
   Check,
   Umbrella,
   Ticket,
-  Search
+  Search,
+  Layers
 } from 'lucide-react';
 import { CATEGORIES, AGE_PRESETS } from '../data/mockEvents';
 
@@ -47,6 +48,8 @@ export default function FilterBar({
   onToggleOnlyFree,
   indoorFilter,
   onIndoorFilterChange,
+  dataSource = 'all',
+  onDataSourceChange,
   totalResultsCount = 0,
   onExecuteSearch
 }) {
@@ -138,6 +141,23 @@ export default function FilterBar({
       {/* 進階條件快捷列 (搶票狀態、免費、室內雨天) */}
       <div className="filter-section extra-conditions-section">
         <div className="conditions-grid">
+          {/* 資料來源切換 */}
+          <div className="condition-item">
+            <label className="condition-label">
+              <Layers size={13} />
+              資料來源：
+            </label>
+            <select
+              value={dataSource}
+              onChange={(e) => onDataSourceChange?.(e.target.value)}
+              className="condition-select highlight-source"
+            >
+              <option value="all">🌟 全台全部活動 (精選 + 文化部即時)</option>
+              <option value="culture">🏛️ 文化部 iCulture 即時開放資料</option>
+              <option value="curated">🎯 特色精選搶票活動</option>
+            </select>
+          </div>
+
           {/* 搶票狀態 */}
           <div className="condition-item">
             <label className="condition-label">

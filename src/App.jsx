@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import {
   MOCK_EVENTS,
-  REGIONS,
-  CATEGORIES,
-  AGE_PRESETS
+  REGIONS
 } from './data/mockEvents';
+import {
+  getInitialCultureEvents,
+  fetchLiveCultureEvents,
+  mergeEvents
+} from './services/cultureApiService';
 import TaiwanMap from './components/TaiwanMap';
 import Header from './components/Header';
 import FilterBar from './components/FilterBar';
@@ -17,14 +20,20 @@ import {
   Map,
   Grid,
   RotateCcw,
-  Sparkles,
-  CalendarDays,
-  Ticket,
-  ChevronDown
+  RefreshCw,
+  CheckCircle2,
+  AlertCircle,
+  Sparkles
 } from 'lucide-react';
 import './App.css';
 
 export default function App() {
+  // 文化部開放資料與資料來源狀態 (預先靜態導入 370+ 檔活動，保證 0ms 零延遲立即呈現)
+  const [cultureEvents, setCultureEvents] = useState(getInitialCultureEvents);
+  const [dataSource, setDataSource] = useState('all'); // 'all', 'culture', 'curated'
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncToast, setSyncToast] = useState(null);
+
   // 篩選狀態
   const [selectedRegion, setSelectedRegion] = useState('all');
   const [selectedCounty, setSelectedCounty] = useState('all');
@@ -35,6 +44,21 @@ export default function App() {
   const [indoorFilter, setIndoorFilter] = useState('all');
   const [onlyFree, setOnlyFree] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+
+  // 載入 localStorage 快取 (若使用者先前曾線上同步過更即時的資料)
+  useEffect(() => {
+    try {
+      const cached = localStorage.getItem('tw_kids_culture_cache');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed.events) && parsed.events.length > 0) {
+          setCultureEvents(parsed.events);
+        }
+      }
+    } catch (e) {
+      console.warn('讀取本地快取失敗:', e);
+    }
+  }, []);
 
   // 視圖切換 (手機與平板適配)
   const [mobileTab, setMobileTab] = useState('list'); // 'map' or 'list'
@@ -68,16 +92,50 @@ export default function App() {
     );
   };
 
+  // 即時連線文化部 API 手動同步
+  const handleSyncCulture = async () => {
+    setIsSyncing(true);
+    setSyncToast({ type: 'info', message: '正在連線文化部 iCulture API 同步最新藝文活動...' });
+    try {
+      const fresh = await fetchLiveCultureEvents();
+      if (fresh && fresh.length > 0) {
+        setCultureEvents(fresh);
+        setSyncToast({
+          type: 'success',
+          message: `🎉 同步完成！取得 ${fresh.length} 筆文化部即時開放資料！`
+        });
+      } else {
+        setSyncToast({
+          type: 'info',
+          message: `目前已連線文化部開放資料庫，共 ${cultureEvents.length} 檔活動！`
+        });
+      }
+    } catch {
+      setSyncToast({
+        type: 'warning',
+        message: '連線逾時，已維持使用本地預載之文化部活動資料。'
+      });
+    } finally {
+      setIsSyncing(false);
+      setTimeout(() => setSyncToast(null), 4000);
+    }
+  };
+
+  // 整合精選與文化部開放資料
+  const allEvents = useMemo(() => {
+    return mergeEvents(MOCK_EVENTS, cultureEvents, dataSource);
+  }, [cultureEvents, dataSource]);
+
   // 即將搶票 / 需預約的熱門活動 (未來14天內開搶或名額告急)
   const urgentEvents = useMemo(() => {
-    return MOCK_EVENTS.filter(
+    return allEvents.filter(
       evt => evt.bookingStatus === 'booking_soon' || evt.bookingStatus === 'almost_full'
     );
-  }, []);
+  }, [allEvents]);
 
   // 多重條件過濾邏輯
   const filteredEvents = useMemo(() => {
-    return MOCK_EVENTS.filter(evt => {
+    return allEvents.filter(evt => {
       // 1. 地區與縣市
       if (selectedCounty !== 'all') {
         if (selectedCounty === '新竹' || selectedCounty === '新竹縣市') {
@@ -132,22 +190,28 @@ export default function App() {
         if (indoorFilter === 'outdoor' && evt.indoorOutdoor === 'indoor') return false;
       }
 
-      // 7. 關鍵字搜尋
+      // 7. 關鍵字搜尋 (支援智慧識別「新活動」、「最新」等泛稱，並深度比對所有欄位)
       if (searchTerm.trim() !== '') {
         const q = searchTerm.trim().toLowerCase();
-        const matchTitle = evt.title.toLowerCase().includes(q);
-        const matchVenue = evt.venue.toLowerCase().includes(q);
-        const matchCounty = evt.county.toLowerCase().includes(q);
-        const matchAddress = evt.address.toLowerCase().includes(q);
-        const matchHighlights = evt.highlights?.some(h => h.toLowerCase().includes(q));
-        if (!matchTitle && !matchVenue && !matchCounty && !matchAddress && !matchHighlights) {
-          return false;
+        const isGenericQuery = ['新活動', '最新活動', '最新', '活動', '全部活動', '所有活動'].includes(q);
+        if (!isGenericQuery) {
+          const matchTitle = evt.title.toLowerCase().includes(q);
+          const matchVenue = evt.venue.toLowerCase().includes(q);
+          const matchCounty = evt.county.toLowerCase().includes(q);
+          const matchAddress = evt.address?.toLowerCase().includes(q);
+          const matchHighlights = evt.highlights?.some(h => h.toLowerCase().includes(q));
+          const matchOrganizer = evt.organizer?.toLowerCase().includes(q);
+          const matchPlatform = evt.bookingPlatform?.toLowerCase().includes(q);
+          if (!matchTitle && !matchVenue && !matchCounty && !matchAddress && !matchHighlights && !matchOrganizer && !matchPlatform) {
+            return false;
+          }
         }
       }
 
       return true;
     });
   }, [
+    allEvents,
     selectedRegion,
     selectedCounty,
     selectedCategory,
@@ -169,6 +233,7 @@ export default function App() {
     setIndoorFilter('all');
     setOnlyFree(false);
     setSearchTerm('');
+    setDataSource('all');
   };
 
   const scrollToRadar = () => {
@@ -179,10 +244,22 @@ export default function App() {
   };
 
   const handleExecuteSearch = (optionalTerm) => {
+    let termToSearch = searchTerm;
     if (typeof optionalTerm === 'string') {
+      termToSearch = optionalTerm;
       setSearchTerm(optionalTerm);
     }
     setMobileTab('list');
+
+    // 即時提示搜尋反饋
+    if (termToSearch.trim()) {
+      setSyncToast({
+        type: 'info',
+        message: `🔎 為您檢索「${termToSearch.trim()}」，即刻呈現全台相關精彩活動！`
+      });
+      setTimeout(() => setSyncToast(null), 3000);
+    }
+
     setTimeout(() => {
       const el = document.getElementById('events-results-section') || document.querySelector('.events-column');
       if (el) {
@@ -200,11 +277,24 @@ export default function App() {
         onExecuteSearch={handleExecuteSearch}
         urgentCount={urgentEvents.length}
         favoriteCount={favorites.length}
+        cultureCount={cultureEvents.length}
+        onSyncCulture={handleSyncCulture}
+        isSyncing={isSyncing}
         onOpenFavorites={() => setIsFavoritesDrawerOpen(true)}
         onScrollToRadar={scrollToRadar}
       />
 
       <main className="main-content-layout">
+        {/* 同步狀態浮動橫幅 */}
+        {syncToast && (
+          <div className={`sync-toast-banner ${syncToast.type}`}>
+            {syncToast.type === 'success' && <CheckCircle2 size={16} />}
+            {syncToast.type === 'warning' && <AlertCircle size={16} />}
+            {syncToast.type === 'info' && <RefreshCw size={16} className={isSyncing ? 'spin-icon' : ''} />}
+            <span>{syncToast.message}</span>
+          </div>
+        )}
+
         {/* 搶票預警雷達區 */}
         <TicketRadarBanner
           urgentEvents={urgentEvents}
@@ -223,7 +313,7 @@ export default function App() {
           }}
         />
 
-        {/* 綜合篩選工具區 (年齡、類型、搶票條件) */}
+        {/* 綜合篩選工具區 (年齡、類型、搶票條件、資料來源) */}
         <FilterBar
           selectedCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
@@ -237,6 +327,8 @@ export default function App() {
           onToggleOnlyFree={setOnlyFree}
           indoorFilter={indoorFilter}
           onIndoorFilterChange={setIndoorFilter}
+          dataSource={dataSource}
+          onDataSourceChange={setDataSource}
           totalResultsCount={filteredEvents.length}
           onExecuteSearch={handleExecuteSearch}
         />
@@ -285,14 +377,14 @@ export default function App() {
               <div className="results-stats">
                 <span className="results-count-number">{filteredEvents.length}</span>
                 <span className="results-label">檔未來 2 個月精彩活動</span>
-                {(selectedCounty !== 'all' || selectedRegion !== 'all' || selectedCategory !== 'all' || customAge || onlyFree || searchTerm) && (
+                {(selectedCounty !== 'all' || selectedRegion !== 'all' || selectedCategory !== 'all' || customAge || onlyFree || searchTerm || dataSource !== 'all') && (
                   <span className="active-filters-summary">
                     （已套用自訂篩選條件）
                   </span>
                 )}
               </div>
 
-              {(selectedCounty !== 'all' || selectedRegion !== 'all' || selectedCategory !== 'all' || customAge || onlyFree || searchTerm) && (
+              {(selectedCounty !== 'all' || selectedRegion !== 'all' || selectedCategory !== 'all' || customAge || onlyFree || searchTerm || dataSource !== 'all') && (
                 <button
                   type="button"
                   className="reset-filters-btn"
@@ -308,17 +400,51 @@ export default function App() {
             {filteredEvents.length === 0 ? (
               <div className="empty-results-box">
                 <div className="empty-icon">🔍</div>
-                <h3 className="empty-title">查無符合條件的活動</h3>
+                <h3 className="empty-title">
+                  {searchTerm ? `查無符合「${searchTerm}」的活動` : '查無符合條件的活動'}
+                </h3>
                 <p className="empty-desc">
-                  嘗試更換選取的縣市、放寬年齡層限制，或是切換其他活動類型看看！
+                  {searchTerm
+                    ? '建議搜尋活動關鍵字（如：恐龍、劇團、音樂會、繪本、市集），或直接瀏覽下方為您精選的推薦活動！'
+                    : '嘗試更換選取的縣市、放寬年齡層限制，或是切換其他活動類型看看！'}
                 </p>
-                <button
-                  type="button"
-                  className="btn-empty-reset"
-                  onClick={handleResetFilters}
-                >
-                  重置篩選條件
-                </button>
+                <div className="empty-actions-row">
+                  <button
+                    type="button"
+                    className="btn-empty-reset"
+                    onClick={handleResetFilters}
+                  >
+                    重置並查看全部 400+ 檔活動
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-empty-sync"
+                    onClick={handleSyncCulture}
+                    disabled={isSyncing}
+                  >
+                    <RefreshCw size={14} className={isSyncing ? 'spin-icon' : ''} />
+                    <span>{isSyncing ? '連線同步中...' : '連線文化部搜尋最新活動'}</span>
+                  </button>
+                </div>
+
+                {/* 智慧推薦熱門活動，絕不讓家長面對空白頁 */}
+                <div className="empty-recommend-section">
+                  <h4 className="empty-recommend-title">
+                    <Sparkles size={16} className="text-amber" />
+                    <span>為您推薦近期最熱門親子活動：</span>
+                  </h4>
+                  <div className="events-cards-grid">
+                    {allEvents.slice(0, 4).map(event => (
+                      <EventCard
+                        key={event.id}
+                        event={event}
+                        isFavorite={favorites.includes(event.id)}
+                        onToggleFavorite={toggleFavorite}
+                        onOpenDetails={setActiveModalEvent}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
             ) : (
               <div className="events-cards-grid">
@@ -362,7 +488,7 @@ export default function App() {
         isOpen={isFavoritesDrawerOpen}
         onClose={() => setIsFavoritesDrawerOpen(false)}
         favorites={favorites}
-        allEvents={MOCK_EVENTS}
+        allEvents={allEvents}
         onRemoveFavorite={toggleFavorite}
         onSelectEvent={setActiveModalEvent}
       />

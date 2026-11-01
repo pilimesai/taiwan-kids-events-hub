@@ -65,6 +65,11 @@ export default function EventCard({
               📸 {event.curator}
             </span>
           )}
+          {event.sourceType === 'culture_tw' && (
+            <span className="culture-badge-chip" title="文化部 iCulture 全國藝文開放資料即時同步">
+              🏛️ 文化部同步
+            </span>
+          )}
         </div>
 
         {/* 收藏按鈕 */}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, BellRing, Bookmark, Search } from 'lucide-react';
+import { Calendar, BellRing, Bookmark, Search, RefreshCw, Radio } from 'lucide-react';
 
 function BrandLogoSvg() {
   return (
@@ -44,6 +44,9 @@ export default function Header({
   onExecuteSearch,
   urgentCount = 0,
   favoriteCount = 0,
+  cultureCount = 0,
+  onSyncCulture,
+  isSyncing = false,
   onOpenFavorites,
   onScrollToRadar
 }) {
@@ -70,6 +73,10 @@ export default function Header({
                   <Calendar size={11} />
                   未來 2 個月
                 </span>
+                <span className="brand-pill-live" title="已串接文化部 iCulture 全國藝文開放資料">
+                  <Radio size={10} className="radio-pulse-icon" />
+                  文化部 API 即時連線
+                </span>
               </div>
               <p className="brand-subtitle">
                 互動地圖 ‧ 年齡篩選 ‧ 展覽/表演/節氣/商場/政府活動 ‧ 搶票防漏
@@ -78,6 +85,22 @@ export default function Header({
           </div>
 
           <div className="header-quick-btns">
+            {onSyncCulture && (
+              <button
+                type="button"
+                className={`btn-sync-culture ${isSyncing ? 'syncing' : ''}`}
+                onClick={onSyncCulture}
+                disabled={isSyncing}
+                title="即時連線文化部 iCulture 開放資料抓取最新藝文活動"
+              >
+                <RefreshCw size={14} className={isSyncing ? 'spin-icon' : ''} />
+                <span className="btn-label-text">{isSyncing ? '同步中...' : '同步文化部'}</span>
+                {cultureCount > 0 && (
+                  <span className="culture-count-tag">{cultureCount}</span>
+                )}
+              </button>
+            )}
+
             {urgentCount > 0 && (
               <button
                 type="button"

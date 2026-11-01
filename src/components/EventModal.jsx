@@ -126,6 +126,11 @@ export default function EventModal({
                 📸 {event.curator} 精選推薦
               </span>
             )}
+            {event.sourceType === 'culture_tw' && (
+              <span className="modal-culture-chip" title="文化部 iCulture 全國藝文活動開放資料即時認證">
+                🏛️ 文化部即時開放資料
+              </span>
+            )}
           </div>
 
           <h2 className="modal-title">{event.title}</h2>
@@ -223,7 +228,7 @@ export default function EventModal({
               <span>活動亮點與特色</span>
             </h3>
             <ul className="modal-highlights-list">
-              {event.highlights.map((item, idx) => (
+              {(event.highlights || []).map((item, idx) => (
                 <li key={idx} className="highlight-item">
                   <CheckCircle size={16} className="check-icon" />
                   <span>{item}</span>
