@@ -7,6 +7,8 @@
     "dev": "vite",
     "sync:events": "node scripts/syncCultureEvents.js",
     "build": "node scripts/syncCultureEvents.js && vite build",
+    "upload": "node scripts/autoPush.js",
+    "sync:push": "node scripts/syncCultureEvents.js && node scripts/autoPush.js",
     "lint": "oxlint",
     "preview": "vite preview"
   },
