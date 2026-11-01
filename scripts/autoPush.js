@@ -29,7 +29,11 @@ export function autoCommitAndPush() {
     const commitMsg = `update: 自動同步最新親子活動與網站更新 (${now})`;
     execSync(`git commit -m "${commitMsg}"`, { stdio: 'inherit' });
 
-    // 3. 上傳至 GitHub
+    // 3. 先同步遠端可能由 GitHub Actions 產生的自動資料更新
+    console.log('🔄 檢查並拉取遠端最新變更 (git pull --rebase)...');
+    execSync('git pull --rebase origin main', { stdio: 'inherit' });
+
+    // 4. 上傳至 GitHub
     console.log('🚀 正在推送至 GitHub 遠端儲存庫 (origin/main)...');
     execSync('git push origin main', { stdio: 'inherit' });
 
@@ -40,4 +44,3 @@ export function autoCommitAndPush() {
 }
 
 autoCommitAndPush();
-
