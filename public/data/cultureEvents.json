@@ -1681,7 +1681,7 @@
     "category": "performance",
     "region": "north",
     "county": "桃園市",
-    "venue": "桃園市政府文化局演藝廳",
+    "venue": "桃園��政��文化局演藝廳",
     "address": "桃園市桃園區縣府路21號",
     "eventStartDate": "2026-11-22",
     "eventEndDate": "2026-11-22",
@@ -1698,7 +1698,7 @@
     "indoorOutdoorLabel": "室內專業場館・風雨無阻",
     "image": "https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&w=900&q=80",
     "highlights": [
-      "演出場館：桃園市政府文化局演藝廳",
+      "演出場館：桃園��政��文化局演藝廳",
       "場次時間：2026/11/22 14:30",
       "公家免門票或藝文推廣自由入場",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
@@ -1987,7 +1987,7 @@
     "category": "performance",
     "region": "north",
     "county": "臺北市",
-    "venue": "國家音樂廳",
+    "venue": "國家音樂��",
     "address": "臺北市中正區中山南路21-1號，信義路側",
     "eventStartDate": "2026-12-05",
     "eventEndDate": "2026-12-05",
@@ -2004,7 +2004,7 @@
     "indoorOutdoorLabel": "室內專業場館・風雨無阻",
     "image": "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=900&q=80",
     "highlights": [
-      "演出場館：國家音樂廳",
+      "演出場館：國家音樂��",
       "場次時間：2026/12/05 19:30",
       "公家免門票或藝文推廣自由入場",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
@@ -4843,7 +4843,7 @@
     "category": "performance",
     "region": "north",
     "county": "臺北市",
-    "venue": "中油大樓��光會議廳",
+    "venue": "中油大樓國光會議廳",
     "address": "臺北市信義區松仁路3號1樓",
     "eventStartDate": "2026-12-12",
     "eventEndDate": "2026-12-12",
@@ -4860,7 +4860,7 @@
     "indoorOutdoorLabel": "室內專業場館・風雨無阻",
     "image": "https://images.unsplash.com/photo-1469488865564-c2de10f69f96?auto=format&fit=crop&w=900&q=80",
     "highlights": [
-      "演出場館：中油大樓��光會議廳",
+      "演出場館：中油大樓國光會議廳",
       "場次時間：2026/12/12 14:00",
       "公家免門票或藝文推廣自由入場",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
@@ -5246,40 +5246,6 @@
     "sourceWebName": "OPENTIX兩廳院文化生活"
   },
   {
-    "id": "culture-6ae4d18126b3245efc753747",
-    "title": "《眾聲匯聚》米特菁英培訓計畫年度音樂會",
-    "category": "performance",
-    "region": "north",
-    "county": "臺北市",
-    "venue": "國家兩廳院演奏廳",
-    "address": "臺北市中正區中山南路21-1號",
-    "eventStartDate": "2027-01-03",
-    "eventEndDate": "2027-01-03",
-    "bookingStatus": "free_walkin",
-    "bookingOpenDate": "2027-01-03 10:00",
-    "bookingPlatform": "OPENTIX兩廳院文化生活",
-    "bookingUrl": "https://www.opentix.life/program/2108120765902880769",
-    "ticketPrice": "免費入場（免門票）",
-    "isFree": true,
-    "minAge": 0,
-    "maxAge": 99,
-    "ageLabel": "全年齡親子皆宜",
-    "indoorOutdoor": "indoor",
-    "indoorOutdoorLabel": "室內專業場館・風雨無阻",
-    "image": "https://images.unsplash.com/photo-1469488865564-c2de10f69f96?auto=format&fit=crop&w=900&q=80",
-    "highlights": [
-      "演出場館：國家兩廳院演奏廳",
-      "場次時間：2027/01/03 14:30",
-      "公家免門票或藝文推廣自由入場",
-      "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
-    ],
-    "notice": "詳情請見官方購票售票系統或主辦單位最新公告。開演前請依場館規範提早入場。",
-    "organizer": "OPENTIX兩廳院文化生活",
-    "isLiveApi": true,
-    "sourceType": "culture_tw",
-    "sourceWebName": "OPENTIX兩廳院文化生活"
-  },
-  {
     "id": "culture-6ae4d18126b3245efc75374a",
     "title": "欣響室內管樂團『聖誕音樂嘉年華II』",
     "category": "performance",
@@ -5576,6 +5542,40 @@
     "highlights": [
       "演出場館：國家音樂廳",
       "場次時間：2026/12/25 19:30",
+      "公家免門票或藝文推廣自由入場",
+      "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
+    ],
+    "notice": "詳情請見官方購票售票系統或主辦單位最新公告。開演前請依場館規範提早入場。",
+    "organizer": "OPENTIX兩廳院文化生活",
+    "isLiveApi": true,
+    "sourceType": "culture_tw",
+    "sourceWebName": "OPENTIX兩廳院文化生活"
+  },
+  {
+    "id": "culture-6aea158426b3245efc75377e",
+    "title": "《這一頁，寫下我們》2026 台中少年兒童合唱團音樂會",
+    "category": "performance",
+    "region": "central",
+    "county": "臺中市",
+    "venue": "臺中國家歌劇院小劇場",
+    "address": "臺中市西屯區惠來路二段101號",
+    "eventStartDate": "2026-12-11",
+    "eventEndDate": "2026-12-11",
+    "bookingStatus": "free_walkin",
+    "bookingOpenDate": "2026-12-11 10:00",
+    "bookingPlatform": "OPENTIX兩廳院文化生活",
+    "bookingUrl": "https://www.opentix.life/program/2114958761601798144",
+    "ticketPrice": "免費入場（免門票）",
+    "isFree": true,
+    "minAge": 0,
+    "maxAge": 99,
+    "ageLabel": "全年齡親子皆宜",
+    "indoorOutdoor": "indoor",
+    "indoorOutdoorLabel": "室內專業場館・風雨無阻",
+    "image": "https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&w=900&q=80",
+    "highlights": [
+      "演出場館：臺中國家歌劇院小劇場",
+      "場次時間：2026/12/11 19:30",
       "公家免門票或藝文推廣自由入場",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
@@ -8585,10 +8585,10 @@
     "county": "臺中市",
     "venue": "人類文化廳二樓",
     "address": "臺中市40453 臺中市北區館前路一號",
-    "eventStartDate": "2026-11-03",
+    "eventStartDate": "2026-11-04",
     "eventEndDate": "2028-12-31",
     "bookingStatus": "booking_open",
-    "bookingOpenDate": "2026-11-03 10:00",
+    "bookingOpenDate": "2026-11-04 10:00",
     "bookingPlatform": "營運科",
     "bookingUrl": "http://www.nmns.edu.tw/ch/visit/price.htm",
     "ticketPrice": "NT$ 全票100元，半票70元。",
@@ -8601,7 +8601,7 @@
     "image": "https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=900&q=80",
     "highlights": [
       "演出場館：人類文化廳二樓",
-      "場次時間：2026/11/03 09:00",
+      "場次時間：2026/11/04 09:00",
       "購票資訊：NT$ 全票100元，半票70元。",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
@@ -9235,7 +9235,7 @@
     "eventEndDate": "2026-12-31",
     "bookingStatus": "booking_open",
     "bookingOpenDate": "2026-01-01 10:00",
-    "bookingPlatform": "全國藝文活動資訊系統",
+    "bookingPlatform": "全國���文活動資訊系統",
     "bookingUrl": "https://www.nmns.edu.tw/park_cfpp/",
     "ticketPrice": "NT$ 全票+50;團體票（20人以上）+30;優待票+30;6 歲以上，未滿 12 歲兒童+25",
     "isFree": false,
@@ -9255,7 +9255,7 @@
     "organizer": "國立自然科學博物館車籠埔斷層保存園區",
     "isLiveApi": true,
     "sourceType": "culture_tw",
-    "sourceWebName": "全國藝文活動資訊系統"
+    "sourceWebName": "全國���文活動資訊系統"
   },
   {
     "id": "culture-6941cd8a26b32416dc348d6d",
@@ -9557,7 +9557,7 @@
       "公家免門票或藝文推廣自由入場",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
-    "notice": "「回家—小林村的故事」常設展，展覽內容包括記憶中的家、消失的家園、組合屋的日子、新家生活等四單元，透過口述記憶影像、文物、模型，搭配互動遊戲，以尋根探索型態呈現早期文獻記錄為「四社平埔」的大武壠族人如何來到這片土地建立家園、延續傳統；並刻劃經歷殤災的大武壠後裔如何展現堅韌意志聯手重建家園。希望藉由展...",
+    "notice": "「回家—小林村的故事」常設展，展覽內容包括記憶���的���、消失的家園、組合屋的日子、新家生活等四單元，透過口述記憶影像、文物、模型，搭配互動遊戲，以尋根探索型態呈現早期文獻記錄為「四社平埔」的大武壠族人如何來到這片土地建立家園、延續傳統；並刻劃經歷殤災的大武壠後裔如何展現堅韌意志聯手重建家園。希...",
     "organizer": "高雄市政府文化局",
     "isLiveApi": true,
     "sourceType": "culture_tw",
@@ -10407,7 +10407,7 @@
       "購票資訊：NT$ 門票--敬老票+75;門票--縣民票+100;門票--優待票+120;門票--普通票+150",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
-    "notice": "黃纘緒——宜蘭歷史上第一位舉人，他用一生寫下「成就他人」的故事。\r\n走進黃舉人宅，不只是踏入一座百年古厝，更是走入一段深植人心的生命軌跡。這裡，是他的故居，也是宜蘭唯一現存的舉人宅第。展覽從他寒門苦讀、金榜題名，到返鄉投身地方建設的歷程娓娓道來。黃纘緒經營水圳、倡議建廟、推廣北管文化，���纘���...",
+    "notice": "黃纘緒——宜蘭歷史上第一位舉人，他用一生寫下「成就他人」的故事。\r\n走進黃舉人宅，不只是踏入一座百年古厝，更是走入一段深植人心的生命軌跡。這裡，是他的故居，也是宜蘭唯一現存的舉人宅第。展覽從他寒門苦讀、金榜題名，到返鄉投身地方建設的歷程娓娓道來。黃纘緒經營水圳、倡議建廟、推廣北管��化��黃纘緒將個...",
     "organizer": "財團法人全聯善美的文化藝術基金會",
     "isLiveApi": true,
     "sourceType": "culture_tw",
@@ -10543,7 +10543,7 @@
       "公家免門票或藝文推廣自由入場",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
-    "notice": "卸下一天的疲憊，推開家門，迎面而來的是什麼呢？ˎˊ˗  \r\n是舒適溫馨的生活感、還是每一天寫下的故事？\r\n是書香、還是流動中的空氣，所記錄下來的情感���憶。\r\n\r\n▪ 展覽介紹｜\r\n本次細膩溫潤的設計概念及展區布置，以作家陳千武客廳及書房為主體，輔以AI新科技，將珍貴的文史內容，如作家陳千武的手稿...",
+    "notice": "卸下一天的疲憊，推開家門，迎面而來的是什麼呢？ˎˊ˗  \r\n是舒適溫馨的生活感、還是每一天寫下的故事？\r\n是書香、還是流動中的空氣，所記錄下來��情感記憶。\r\n\r\n▪ 展覽介紹｜\r\n本次細膩溫潤的設計概念及展區布置，以作家陳千武客廳及書房為主體，輔以AI新科技，將珍貴的文史內容，如作家陳千武的手稿、...",
     "organizer": "臺中市精武圖書館",
     "isLiveApi": true,
     "sourceType": "culture_tw",
@@ -13174,7 +13174,7 @@
     "region": "north",
     "county": "臺北市",
     "venue": "臺北表演藝術中心",
-    "address": "臺北市士林區劍潭路1號",
+    "address": "臺北市��林��劍潭路1號",
     "eventStartDate": "2026-11-15",
     "eventEndDate": "2026-11-29",
     "bookingStatus": "free_walkin",
