@@ -758,40 +758,6 @@
     "sourceWebName": "OPENTIX兩廳院文化生活"
   },
   {
-    "id": "culture-6a2c3bea26b3243414ccd21c",
-    "title": "2026探索管風琴音樂《法蘭西聖誕之光》",
-    "category": "performance",
-    "region": "south",
-    "county": "高雄市",
-    "venue": "衛武營國家藝術文化中心音樂廳",
-    "address": "高雄市鳳山區三多一路1號",
-    "eventStartDate": "2026-12-23",
-    "eventEndDate": "2026-12-23",
-    "bookingStatus": "free_walkin",
-    "bookingOpenDate": "2026-12-23 10:00",
-    "bookingPlatform": "OPENTIX兩廳院文化生活",
-    "bookingUrl": "https://www.opentix.life/program/2063948663367925761",
-    "ticketPrice": "免費入場（免門票）",
-    "isFree": true,
-    "minAge": 0,
-    "maxAge": 99,
-    "ageLabel": "全年齡親子皆宜",
-    "indoorOutdoor": "indoor",
-    "indoorOutdoorLabel": "室內專業場館・風雨無阻",
-    "image": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=80",
-    "highlights": [
-      "演出場館：衛武營國家藝術文化中心音樂廳",
-      "場次時間：2026/12/23 14:30",
-      "公家免門票或藝文推廣自由入場",
-      "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
-    ],
-    "notice": "詳情請見官方購票售票系統或主辦單位最新公告。開演前請依場館規範提早入場。",
-    "organizer": "OPENTIX兩廳院文化生活",
-    "isLiveApi": true,
-    "sourceType": "culture_tw",
-    "sourceWebName": "OPENTIX兩廳院文化生活"
-  },
-  {
     "id": "culture-6a30305c26b3243414ccd2d2",
     "title": "「爵士禾聲」系列音樂會 #07｜《他/她們眼中的世界》——爵士創作歌手的音樂說法",
     "category": "performance",
@@ -5451,7 +5417,7 @@
   },
   {
     "id": "culture-6aeb66f526b3245efc75378b",
-    "title": "合唱．音樂劇—金牌指揮徐惠君與台北愛樂少年及兒童合唱團音樂會",
+    "title": "合唱．音樂劇—金牌指揮徐惠君與台北愛樂少年及兒童合唱團音���會",
     "category": "performance",
     "region": "north",
     "county": "臺北市",
@@ -9489,7 +9455,7 @@
       "公家免門票或藝文推廣自由入場",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
-    "notice": "「回家—小林村的故事」常設展，展覽內容包括記憶���的���、消失的家園、組合屋的日子、新家生活等四單元，透過口述記憶影像、文物、模型，搭配互動遊戲，以尋根探索型態呈現早期文獻記錄為「四社平埔」的大武壠族人如何來到這片土地建立家園、延續傳統；並刻劃經歷殤災的大武壠後裔如何展現堅韌意志聯手重建家園。希...",
+    "notice": "「回家—小林村的故事」常設展，展覽內容包括記憶中的家、消失的家園、組合屋的日子、新家生活等四單元，透過口述記憶影像、文物、模型，搭配互動遊戲，以尋根探索型態呈現早期文獻記錄為「四社平埔」的大武壠族人如何來到這片土地建立家園、延續傳統；並刻劃經歷殤災的大武壠後裔如何展現堅韌意志聯手重建家園。希望藉由展...",
     "organizer": "高雄市政府文化局",
     "isLiveApi": true,
     "sourceType": "culture_tw",
@@ -10475,7 +10441,7 @@
       "公家免門票或藝文推廣自由入場",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
-    "notice": "卸下一天的疲憊，推開家門，迎面而來的是什麼呢？ˎˊ˗  \r\n是舒適溫馨的生活感、還是每一天寫下的故事？\r\n是書香、還是流動中的空氣，所記錄下來���情感記憶。\r\n\r\n▪ 展覽介紹｜\r\n本次細膩溫潤的設計概念及展區布置，以作家陳千武客廳及書房為主體，輔以AI新科技，將珍貴的文史內容，如作家陳千武的手稿...",
+    "notice": "卸下一天的疲憊，推開家門，迎面而來的是什麼呢？ˎˊ˗  \r\n是舒適溫馨的生活感、還是每一天寫下的故事？\r\n是書香、還是流動中的空氣，所記錄下來的情感���憶���\r\n\r\n▪ 展覽介紹｜\r\n本次細膩溫潤的設計概念及展區布置，以作家陳千武客廳及書房為主體，輔以AI新科技，將珍貴的文史內容，如作家陳千武的...",
     "organizer": "臺中市精武圖書館",
     "isLiveApi": true,
     "sourceType": "culture_tw",
