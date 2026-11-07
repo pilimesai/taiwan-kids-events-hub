@@ -15,7 +15,10 @@ import {
   Umbrella,
   Ticket,
   Search,
-  Layers
+  Layers,
+  Calendar,
+  Clock,
+  Hourglass
 } from 'lucide-react';
 import { CATEGORIES, AGE_PRESETS } from '../data/mockEvents';
 
@@ -42,6 +45,10 @@ export default function FilterBar({
   onSelectAgePreset,
   customAge,
   onCustomAgeChange,
+  selectedDaysPreset = 'all',
+  onSelectDaysPreset,
+  customDays = '',
+  onCustomDaysChange,
   bookingFilter,
   onBookingFilterChange,
   onlyFree,
@@ -138,8 +145,76 @@ export default function FilterBar({
         </div>
       </div>
 
+      {/* 活動時程（幾日內的活動篩選） */}
+      <div className="filter-section days-section">
+        <div className="filter-row-between">
+          <div className="filter-section-title">
+            <span className="filter-badge">3</span>
+            <span>活動時程（選擇幾日內活動）</span>
+          </div>
+
+          {/* 自訂天數輸入 */}
+          <div className="custom-days-input-box">
+            <span className="custom-days-label">自訂天數：</span>
+            <div className="custom-days-field">
+              <input
+                type="number"
+                min="1"
+                max="90"
+                placeholder="天數"
+                value={customDays}
+                onChange={(e) => onCustomDaysChange?.(e.target.value)}
+                className="days-number-input"
+              />
+              <span className="days-unit">天內</span>
+            </div>
+            {customDays && (
+              <button
+                type="button"
+                className="clear-days-btn"
+                onClick={() => onCustomDaysChange?.('')}
+                title="清除自訂天數"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="days-chips-list">
+          {[
+            { id: 'all', label: '全部檔期 (不限天數)', icon: Calendar, days: null },
+            { id: '3', label: '⚡ 未來 3 天內 (本週末出發)', icon: Clock, days: 3 },
+            { id: '7', label: '📅 未來 7 天內 (一週內放電)', icon: Calendar, days: 7 },
+            { id: '14', label: '🗓️ 未來 14 天內 (雙週行程)', icon: Calendar, days: 14 },
+            { id: '30', label: '🎪 未來 30 天內 (近一個月)', icon: Hourglass, days: 30 }
+          ].map((preset) => {
+            const Icon = preset.icon;
+            const isSelected = !customDays && selectedDaysPreset === preset.id;
+            return (
+              <button
+                key={preset.id}
+                type="button"
+                className={`days-chip ${isSelected ? 'active' : ''}`}
+                onClick={() => {
+                  onCustomDaysChange?.('');
+                  onSelectDaysPreset?.(preset.id);
+                }}
+              >
+                <Icon size={14} />
+                <span>{preset.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* 進階條件快捷列 (搶票狀態、免費、室內雨天) */}
       <div className="filter-section extra-conditions-section">
+        <div className="filter-section-title-subtle">
+          <span className="filter-badge">4</span>
+          <span>進階條件篩選</span>
+        </div>
         <div className="conditions-grid">
           {/* 資料來源切換 */}
           <div className="condition-item">

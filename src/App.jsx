@@ -40,10 +40,25 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedAgePreset, setSelectedAgePreset] = useState('all');
   const [customAge, setCustomAge] = useState('');
+  const [selectedDaysPreset, setSelectedDaysPreset] = useState('all');
+  const [customDays, setCustomDays] = useState('');
   const [bookingFilter, setBookingFilter] = useState('all');
   const [indoorFilter, setIndoorFilter] = useState('all');
   const [onlyFree, setOnlyFree] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+
+  // 取得基準比對日期 (自動適配當前真實日期)
+  const getEffectiveTodayStr = () => {
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth() + 1).padStart(2, '0');
+    const d = String(now.getDate()).padStart(2, '0');
+    const str = `${y}-${m}-${d}`;
+    if (str > '2027-06-01' || str < '2026-01-01') {
+      return '2026-11-07';
+    }
+    return str;
+  };
 
   // 載入 localStorage 快取 (若使用者先前曾線上同步過更即時的資料)
   useEffect(() => {
@@ -211,6 +226,24 @@ export default function App() {
         }
       }
 
+      // 8. 幾日內的活動時程篩選 (依當前日期算起)
+      const effectiveDays = customDays !== '' ? Number(customDays) : (selectedDaysPreset !== 'all' ? Number(selectedDaysPreset) : null);
+      if (effectiveDays !== null && !isNaN(effectiveDays) && effectiveDays > 0) {
+        const todayStr = getEffectiveTodayStr();
+        const targetDate = new Date(todayStr);
+        targetDate.setDate(targetDate.getDate() + effectiveDays);
+        const tYear = targetDate.getFullYear();
+        const tMonth = String(targetDate.getMonth() + 1).padStart(2, '0');
+        const tDay = String(targetDate.getDate()).padStart(2, '0');
+        const targetStr = `${tYear}-${tMonth}-${tDay}`;
+
+        const start = evt.eventStartDate || todayStr;
+        const end = evt.eventEndDate || start;
+        if (end < todayStr || start > targetStr) {
+          return false;
+        }
+      }
+
       return true;
     });
   }, [
@@ -220,6 +253,8 @@ export default function App() {
     selectedCategory,
     selectedAgePreset,
     customAge,
+    selectedDaysPreset,
+    customDays,
     bookingFilter,
     onlyFree,
     indoorFilter,
@@ -232,6 +267,8 @@ export default function App() {
     setSelectedCategory('all');
     setSelectedAgePreset('all');
     setCustomAge('');
+    setSelectedDaysPreset('all');
+    setCustomDays('');
     setBookingFilter('all');
     setIndoorFilter('all');
     setOnlyFree(false);
@@ -316,7 +353,7 @@ export default function App() {
           }}
         />
 
-        {/* 綜合篩選工具區 (年齡、類型、搶票條件、資料來源) */}
+        {/* 綜合篩選工具區 (年齡、類型、時程天數、搶票條件、資料來源) */}
         <FilterBar
           selectedCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
@@ -324,6 +361,10 @@ export default function App() {
           onSelectAgePreset={setSelectedAgePreset}
           customAge={customAge}
           onCustomAgeChange={setCustomAge}
+          selectedDaysPreset={selectedDaysPreset}
+          onSelectDaysPreset={setSelectedDaysPreset}
+          customDays={customDays}
+          onCustomDaysChange={setCustomDays}
           bookingFilter={bookingFilter}
           onBookingFilterChange={setBookingFilter}
           onlyFree={onlyFree}
@@ -380,14 +421,14 @@ export default function App() {
               <div className="results-stats">
                 <span className="results-count-number">{filteredEvents.length}</span>
                 <span className="results-label">檔未來 2 個月精彩活動</span>
-                {(selectedCounty !== 'all' || selectedRegion !== 'all' || selectedCategory !== 'all' || customAge || onlyFree || searchTerm || dataSource !== 'all') && (
+                {(selectedCounty !== 'all' || selectedRegion !== 'all' || selectedCategory !== 'all' || customAge || selectedDaysPreset !== 'all' || customDays || onlyFree || searchTerm || dataSource !== 'all') && (
                   <span className="active-filters-summary">
-                    （已套用自訂篩選條件）
+                    （已套用自訂篩選條件{customDays ? `：${customDays}天內活動` : (selectedDaysPreset !== 'all' ? `：${selectedDaysPreset}天內活動` : '')}）
                   </span>
                 )}
               </div>
 
-              {(selectedCounty !== 'all' || selectedRegion !== 'all' || selectedCategory !== 'all' || customAge || onlyFree || searchTerm || dataSource !== 'all') && (
+              {(selectedCounty !== 'all' || selectedRegion !== 'all' || selectedCategory !== 'all' || customAge || selectedDaysPreset !== 'all' || customDays || onlyFree || searchTerm || dataSource !== 'all') && (
                 <button
                   type="button"
                   className="reset-filters-btn"
@@ -409,7 +450,9 @@ export default function App() {
                 <p className="empty-desc">
                   {searchTerm
                     ? '建議搜尋活動關鍵字（如：恐龍、劇團、音樂會、繪本、市集），或直接瀏覽下方為您精選的推薦活動！'
-                    : '嘗試更換選取的縣市、放寬年齡層限制，或是切換其他活動類型看看！'}
+                    : (customDays || selectedDaysPreset !== 'all'
+                        ? `在「未來 ${customDays || selectedDaysPreset} 天內」暫無符合的活動，您可以嘗試放寬天數範圍或切換縣市看看！`
+                        : '嘗試更換選取的縣市、放寬年齡層限制，或是切換其他活動類型看看！')}
                 </p>
                 <div className="empty-actions-row">
                   <button

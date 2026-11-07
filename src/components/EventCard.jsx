@@ -23,6 +23,38 @@ export default function EventCard({
   const categoryInfo = CATEGORIES.find(c => c.id === event.category) || CATEGORIES[0];
   const statusInfo = BOOKING_STATUSES[event.bookingStatus] || BOOKING_STATUSES.booking_open;
 
+  // 計算活動出遊時程標籤 (進行中 / 幾天後開跑)
+  const timingBadge = React.useMemo(() => {
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = String(today.getMonth() + 1).padStart(2, '0');
+    const d = String(today.getDate()).padStart(2, '0');
+    let todayStr = `${y}-${m}-${d}`;
+    if (todayStr > '2027-06-01' || todayStr < '2026-01-01') {
+      todayStr = '2026-11-07';
+    }
+
+    const start = event.eventStartDate || todayStr;
+    const end = event.eventEndDate || start;
+    if (start <= todayStr && end >= todayStr) {
+      return { label: '🟢 進行中', className: 'timing-ongoing' };
+    }
+    if (start > todayStr) {
+      const diffDays = Math.ceil((new Date(start) - new Date(todayStr)) / (1000 * 60 * 60 * 24));
+      if (diffDays <= 3) {
+        return { label: `⚡ ${diffDays}天內登場`, className: 'timing-soon' };
+      }
+      if (diffDays <= 7) {
+        return { label: `📅 本週登場`, className: 'timing-week' };
+      }
+      if (diffDays <= 14) {
+        return { label: `🗓️ 雙週內`, className: 'timing-future' };
+      }
+      return { label: `🗓️ ${start.slice(5)}登場`, className: 'timing-future' };
+    }
+    return null;
+  }, [event.eventStartDate, event.eventEndDate]);
+
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
     onToggleFavorite(event.id);
@@ -101,7 +133,7 @@ export default function EventCard({
 
       {/* 卡片內容主體 */}
       <div className="event-card-body">
-        {/* 年齡標籤與費用 */}
+        {/* 年齡標籤、費用與時程 */}
         <div className="event-specs-row">
           <span className="age-spec-pill">
             <Users size={12} />
@@ -110,6 +142,11 @@ export default function EventCard({
           <span className={`price-spec-pill ${event.isFree ? 'is-free' : ''}`}>
             {event.isFree ? '🎁 免門票' : '🎟️ 售票/需付費'}
           </span>
+          {timingBadge && (
+            <span className={`timing-spec-pill ${timingBadge.className}`}>
+              {timingBadge.label}
+            </span>
+          )}
         </div>
 
         {/* 標題 */}

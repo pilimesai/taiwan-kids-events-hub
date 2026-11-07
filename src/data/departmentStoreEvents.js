@@ -389,3 +389,4 @@ export const DEPARTMENT_STORE_EVENTS = [
     sourceWebName: '宏匯廣場官方活動快報'
   }
 ];
+
