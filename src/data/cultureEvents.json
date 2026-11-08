@@ -6846,6 +6846,40 @@
     "sourceWebName": "OPENTIX兩廳院文化生活"
   },
   {
+    "id": "culture-6aea158526b3245efc753781",
+    "title": "暗影・光影",
+    "category": "performance",
+    "region": "north",
+    "county": "臺北市",
+    "venue": "台北愛樂暨梅哲音樂文化館",
+    "address": "臺北市中正區濟南路一段七號 B1",
+    "eventStartDate": "2026-12-19",
+    "eventEndDate": "2026-12-19",
+    "bookingStatus": "free_walkin",
+    "bookingOpenDate": "2026-12-19 10:00",
+    "bookingPlatform": "OPENTIX兩廳院文化生活",
+    "bookingUrl": "https://www.opentix.life/program/2115251312489586689",
+    "ticketPrice": "免費入場（免門票）",
+    "isFree": true,
+    "minAge": 0,
+    "maxAge": 99,
+    "ageLabel": "全年齡親子皆宜",
+    "indoorOutdoor": "indoor",
+    "indoorOutdoorLabel": "室內專業場館・風雨無阻",
+    "image": "https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&w=900&q=80",
+    "highlights": [
+      "演出場館：台北愛樂暨梅哲音樂文化館",
+      "場次時間：2026/12/19 19:30",
+      "公家免門票或藝文推廣自由入場",
+      "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
+    ],
+    "notice": "詳情請見官方購票售票系統或主辦單位最新公告。開演前請依場館規範提早入場。",
+    "organizer": "OPENTIX兩廳院文化生活",
+    "isLiveApi": true,
+    "sourceType": "culture_tw",
+    "sourceWebName": "OPENTIX兩廳院文化生活"
+  },
+  {
     "id": "culture-6aeb66f526b3245efc753788",
     "title": "《冬夜的光之洞窟》燭光音樂會",
     "category": "performance",
@@ -8722,7 +8756,7 @@
     "region": "north",
     "county": "臺北市",
     "venue": "臺灣大學藝文中心遊心劇場",
-    "address": "臺北市大��區羅斯福路四段1號臺灣大學禮賢樓B1",
+    "address": "臺北市大安區羅斯福路四段1號臺灣大學禮賢樓B1",
     "eventStartDate": "2026-12-25",
     "eventEndDate": "2026-12-27",
     "bookingStatus": "free_walkin",
@@ -13367,7 +13401,7 @@
       "公家免門票或藝文推廣自由入場",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
-    "notice": "本次展覽從客家文化歷史的視角下，探索漳州移民開墾大溪的歷程，以及客家族群在地的淵源，並帶大家一同尋找大溪客家「或隱或顯」的人文地景，透過建築、信仰、產業、飲食等面向，進一步發現大溪多元族群交融之美。\r\n\r\n|第一展區｜發現大溪有緣客、溪客稀客從哪來 \r\n|第��展區｜多族群開發大溪、溪客的宗教信仰 ...",
+    "notice": "本次展覽從客家文化歷史的視角下，探索漳州移民開墾大溪的歷程，以及客家族群在地的淵源，並帶大家一同尋找大溪客家「或隱或顯」的人文地景，透過建築、信仰、產業、飲食等面向，進一步發現大溪多元族群交融之美。\r\n\r\n|第一展區｜發現大溪有緣客、溪客稀客從哪來 \r\n|第二���區｜多族群開發大溪、溪客的宗教信仰...",
     "organizer": "桃園市立大溪木藝生態博物館",
     "isLiveApi": true,
     "sourceType": "culture_tw",
@@ -13810,7 +13844,7 @@
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
     "notice": "介紹古今船艦及武器，重現自明清時期至二戰橫跨300年的重大海戰事件，包括金門料羅灣、安平、澎湖、基隆、淡水、台中與高雄等地戰役。特展透過互動投影裝置，重現明清到二戰重大海戰事件，讓民眾在沉浸式互動中，理解各戰役時代背景與歷史意義。",
-    "organizer": "���化部文化資產局",
+    "organizer": "文化部文化資產局",
     "isLiveApi": true,
     "sourceType": "culture_tw",
     "sourceWebName": "全國藝文活動資訊系統"
@@ -14761,7 +14795,7 @@
       "公家免門票或藝文推廣自由入場",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
-    "notice": "國立臺灣工藝研究發展中心於114年度典藏新增顏水龍珍貴原作40件，涵蓋工藝設計手稿、陶藝創作與竹工藝家具等多元類型，並以「漫工活藝 Craft Flow」為��展��題，重新回望臺灣近代工藝在文化啟蒙、生活實踐與美學轉譯中的發展軌跡。工藝從非靜態的物件存在，而是一種根植於日常、回應時代的文化流動；它...",
+    "notice": "國立臺灣工藝研究發展中心於114年度典藏新增顏水龍珍貴原作40件，涵蓋工藝設計手稿、陶藝創作與竹工藝家具等多元類型，並以「漫工活藝 Craft Flow」為策展��題，重新回望臺灣近代工藝在文化啟蒙、生活實踐與美學轉譯中的發展軌跡。工藝從非靜態的物件存在，而是一種根植於日常、回應時代的文化流動；它在...",
     "organizer": "國立臺灣工藝研究發展中心",
     "isLiveApi": true,
     "sourceType": "culture_tw",
@@ -15517,7 +15551,7 @@
   },
   {
     "id": "culture-696e972926b3243b1ca0c0e5",
-    "title": "多元文化讀書會： 共讀環保再利用-針ㄉ好棒。手作創藝",
+    "title": "多元文化讀書會： 共讀���保再利用-針ㄉ好棒。手作創藝",
     "category": "solar_term",
     "region": "south",
     "county": "高雄市",
