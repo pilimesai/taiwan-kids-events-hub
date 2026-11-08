@@ -83,21 +83,47 @@ function cleanHtml(str = '') {
 }
 
 /**
- * 同步取得初始活動資料 (0ms 零延遲，靜態打包導入 + localStorage 快取優先)
+ * 取得當前標準日期 (YYYY-MM-DD)
+ */
+export function getTodayDateStr() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+/**
+ * 判定活動是否已過期 (結束日早於今天即算過期)
+ */
+export function isEventExpired(event, todayStr = getTodayDateStr()) {
+  if (!event) return true;
+  const end = event.eventEndDate || event.eventStartDate;
+  if (!end) return false;
+  return end < todayStr;
+}
+
+/**
+ * 同步取得初始活動資料 (0ms 零延遲，靜態打包導入 + localStorage 快取優先，自動濾除過期活動)
  */
 export function getInitialCultureEvents() {
+  const todayStr = getTodayDateStr();
   try {
     const cached = localStorage.getItem('tw_kids_culture_cache');
     if (cached) {
       const parsed = JSON.parse(cached);
       if (Array.isArray(parsed.events) && parsed.events.length > 0) {
-        return parsed.events;
+        const validEvents = parsed.events.filter(e => !isEventExpired(e, todayStr));
+        if (validEvents.length > 0) {
+          return validEvents;
+        }
       }
     }
   } catch (e) {
     console.warn('讀取本地快取失敗:', e);
   }
-  return Array.isArray(staticCultureEvents) ? staticCultureEvents : [];
+  const staticList = Array.isArray(staticCultureEvents) ? staticCultureEvents : [];
+  return staticList.filter(e => !isEventExpired(e, todayStr));
 }
 
 /**
@@ -211,8 +237,12 @@ export async function fetchLiveCultureEvents() {
           ? item.imageUrl
           : getStockImage(category, item.UID || normalizedTitle);
 
-        const startDateClean = item.startDate ? item.startDate.replace(/\//g, '-') : '2026-11-01';
+        const todayStr = getTodayDateStr();
+        const startDateClean = item.startDate ? item.startDate.replace(/\//g, '-') : todayStr;
         const endDateClean = item.endDate ? item.endDate.replace(/\//g, '-') : startDateClean;
+
+        // 過期的活動自動濾除（已結束活動不予收錄）
+        if (endDateClean < todayStr) continue;
 
         const highlights = [];
         if (rawVenue) highlights.push(`演出場館：${rawVenue}`);
@@ -254,8 +284,10 @@ export async function fetchLiveCultureEvents() {
       }
     }
 
-    // 將全台各大百貨商場特展快閃活動合併
-    const allCombined = [...DEPARTMENT_STORE_EVENTS, ...processed];
+    // 將全台各大百貨商場特展快閃活動合併（排除過期）
+    const todayStr = getTodayDateStr();
+    const validDeptEvents = (DEPARTMENT_STORE_EVENTS || []).filter(e => !isEventExpired(e, todayStr));
+    const allCombined = [...validDeptEvents, ...processed].filter(e => !isEventExpired(e, todayStr));
 
     if (allCombined.length > 0) {
       try {
@@ -271,25 +303,31 @@ export async function fetchLiveCultureEvents() {
     return allCombined;
   } catch (err) {
     console.error('線上尋找最新活動失敗:', err);
-    return [...DEPARTMENT_STORE_EVENTS, ...(staticCultureEvents || [])];
+    const todayStr = getTodayDateStr();
+    const validDept = (DEPARTMENT_STORE_EVENTS || []).filter(e => !isEventExpired(e, todayStr));
+    const validStatic = (staticCultureEvents || []).filter(e => !isEventExpired(e, todayStr));
+    return [...validDept, ...validStatic];
   }
 }
 
 /**
- * 整合精選活動、百貨商場特展與文化部開放資料
+ * 整合精選活動、百貨商場特展與文化部開放資料（全面過濾已結束過期活動）
  */
 export function mergeEvents(mockEvents = [], cultureEvents = [], dataSource = 'all') {
+  const todayStr = getTodayDateStr();
   let list = [];
 
-  // 合併並以 mockEvents 為精選置頂，過濾重複活動標題
+  // 合併並以 mockEvents 為精選置頂，過濾重複活動標題與過期活動
   const titles = new Set();
 
   for (const evt of mockEvents) {
+    if (isEventExpired(evt, todayStr)) continue; // 過期活動直接刪除濾除
     titles.add(evt.title.trim().toLowerCase());
     list.push(evt);
   }
 
   for (const evt of cultureEvents) {
+    if (isEventExpired(evt, todayStr)) continue; // 過期活動直接刪除濾除
     const key = evt.title.trim().toLowerCase();
     if (!titles.has(key)) {
       titles.add(key);

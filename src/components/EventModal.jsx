@@ -31,6 +31,14 @@ export default function EventModal({
   const categoryInfo = CATEGORIES.find(c => c.id === event.category) || CATEGORIES[0];
   const statusInfo = BOOKING_STATUSES[event.bookingStatus] || BOOKING_STATUSES.booking_open;
 
+  // 計算是否已過期
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  const todayStr = `${y}-${m}-${d}`;
+  const isExpired = Boolean(event.eventEndDate && event.eventEndDate < todayStr);
+
   // 生成 Google Calendar 連結
   const generateGoogleCalendarUrl = () => {
     const startDateClean = event.eventStartDate.replace(/-/g, '');
@@ -114,9 +122,15 @@ export default function EventModal({
             >
               {categoryInfo.name}
             </span>
-            <span className={`modal-status-chip ${statusInfo.badgeClass}`}>
-              {statusInfo.label}
-            </span>
+            {isExpired ? (
+              <span className="modal-status-chip badge-danger" style={{ backgroundColor: '#EF4444', color: '#fff' }}>
+                ⚠️ 活動已圓滿落幕
+              </span>
+            ) : (
+              <span className={`modal-status-chip ${statusInfo.badgeClass}`}>
+                {statusInfo.label}
+              </span>
+            )}
             <span className="modal-weather-chip">
               <Umbrella size={12} />
               {event.indoorOutdoorLabel}
@@ -180,8 +194,21 @@ export default function EventModal({
               </div>
             </div>
 
+            {/* 過期提醒 */}
+            {isExpired && (
+              <div className="war-room-notice" style={{ backgroundColor: '#FEF2F2', borderColor: '#FCA5A5' }}>
+                <AlertTriangle size={18} style={{ color: '#DC2626', flexShrink: 0 }} />
+                <div className="notice-body">
+                  <strong style={{ color: '#DC2626' }}>活動已截止提醒：</strong>
+                  <span style={{ color: '#991B1B' }}>
+                    本活動展演期間已於 {event.eventEndDate} 圓滿落幕，目前已無法預約或購票。歡迎瀏覽首頁其他最新親子活動！
+                  </span>
+                </div>
+              </div>
+            )}
+
             {/* 家長搶票與入場小提醒 */}
-            {event.notice && (
+            {!isExpired && event.notice && (
               <div className="war-room-notice">
                 <AlertTriangle size={16} className="notice-icon" />
                 <div className="notice-body">
@@ -193,15 +220,26 @@ export default function EventModal({
 
             {/* 搶票直接前往按鈕群 */}
             <div className="war-room-actions">
-              <a
-                href={event.bookingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-booking-primary"
-              >
-                <span>前往官方預約 / 購票平台</span>
-                <ExternalLink size={16} />
-              </a>
+              {isExpired ? (
+                <button
+                  type="button"
+                  className="btn-booking-primary"
+                  style={{ backgroundColor: '#9CA3AF', cursor: 'not-allowed', opacity: 0.85 }}
+                  disabled
+                >
+                  <span>本活動已圓滿落幕</span>
+                </button>
+              ) : (
+                <a
+                  href={event.bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-booking-primary"
+                >
+                  <span>前往官方預約 / 購票平台</span>
+                  <ExternalLink size={16} />
+                </a>
+              )}
 
               <a
                 href={generateGoogleCalendarUrl()}

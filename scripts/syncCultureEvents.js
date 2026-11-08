@@ -103,6 +103,16 @@ function cleanHtml(str = '') {
 
 export async function syncCultureEvents() {
   console.log('🔄 開始同步文化部 iCulture 全國藝文活動開放資料...');
+
+  // 計算台灣當前日期 (UTC+8) 作為過期篩選基準
+  const now = new Date();
+  const taiwanTime = new Date(now.getTime() + (now.getTimezoneOffset() + 480) * 60000);
+  const y = taiwanTime.getFullYear();
+  const m = String(taiwanTime.getMonth() + 1).padStart(2, '0');
+  const d = String(taiwanTime.getDate()).padStart(2, '0');
+  const todayStr = `${y}-${m}-${d}`;
+  console.log(`📅 當前基準日期: ${todayStr} (自動濾除已過期活動)`);
+
   const categories = [1, 2, 4, 6, 7, 8];
   const allResults = await Promise.all(categories.map(fetchCategory));
   const rawList = allResults.flat();
@@ -195,8 +205,11 @@ export async function syncCultureEvents() {
       : getStockImage(category, item.UID || normalizedTitle);
 
     // 日期格式化 (YYYY-MM-DD)
-    const startDateClean = item.startDate ? item.startDate.replace(/\//g, '-') : '2026-11-01';
+    const startDateClean = item.startDate ? item.startDate.replace(/\//g, '-') : todayStr;
     const endDateClean = item.endDate ? item.endDate.replace(/\//g, '-') : startDateClean;
+
+    // 自動濾除已過期活動（活動結束日期早於今天者直接刪除）
+    if (endDateClean < todayStr) continue;
 
     // 亮點特色
     const highlights = [];
@@ -242,17 +255,24 @@ export async function syncCultureEvents() {
 
   console.log(`✅ 親子精選活動處理完成，共萃取 ${processedEvents.length} 筆文化部活動！`);
 
-  // 加入全台各大百貨商場最新特展與快閃活動
+  // 加入全台各大百貨商場最新特展與快閃活動（過濾已過期）
   let deptEvents = [];
   try {
     const deptModule = await import('../src/data/departmentStoreEvents.js');
-    deptEvents = deptModule.DEPARTMENT_STORE_EVENTS || [];
+    const rawDeptEvents = deptModule.DEPARTMENT_STORE_EVENTS || [];
+    deptEvents = rawDeptEvents.filter(e => {
+      const end = e.eventEndDate || e.eventStartDate;
+      return !end || end >= todayStr;
+    });
     console.log(`🛍️ 已成功納入全台各大百貨商場活動: ${deptEvents.length} 檔！`);
   } catch (err) {
     console.warn('載入百貨商場活動失敗:', err.message);
   }
 
-  const allCombined = [...deptEvents, ...processedEvents];
+  const allCombined = [...deptEvents, ...processedEvents].filter(e => {
+    const end = e.eventEndDate || e.eventStartDate;
+    return !end || end >= todayStr;
+  });
 
   // 儲存至 public/data/cultureEvents.json 與 src/data/cultureEvents.json
   const publicDir = path.resolve(__dirname, '../public/data');

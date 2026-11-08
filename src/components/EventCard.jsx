@@ -29,13 +29,13 @@ export default function EventCard({
     const y = today.getFullYear();
     const m = String(today.getMonth() + 1).padStart(2, '0');
     const d = String(today.getDate()).padStart(2, '0');
-    let todayStr = `${y}-${m}-${d}`;
-    if (todayStr > '2027-06-01' || todayStr < '2026-01-01') {
-      todayStr = '2026-11-07';
-    }
+    const todayStr = `${y}-${m}-${d}`;
 
     const start = event.eventStartDate || todayStr;
     const end = event.eventEndDate || start;
+    if (end < todayStr) {
+      return { label: '⚠️ 已結束', className: 'timing-expired' };
+    }
     if (start <= todayStr && end >= todayStr) {
       return { label: '🟢 進行中', className: 'timing-ongoing' };
     }

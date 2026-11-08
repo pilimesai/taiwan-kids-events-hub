@@ -53,21 +53,22 @@ export default function App() {
     const y = now.getFullYear();
     const m = String(now.getMonth() + 1).padStart(2, '0');
     const d = String(now.getDate()).padStart(2, '0');
-    const str = `${y}-${m}-${d}`;
-    if (str > '2027-06-01' || str < '2026-01-01') {
-      return '2026-11-07';
-    }
-    return str;
+    return `${y}-${m}-${d}`;
   };
 
-  // 載入 localStorage 快取 (若使用者先前曾線上同步過更即時的資料)
+  // 載入 localStorage 快取 (若使用者先前曾線上同步過更即時的資料，自動濾除過期活動)
   useEffect(() => {
     try {
+      const todayStr = getEffectiveTodayStr();
       const cached = localStorage.getItem('tw_kids_culture_cache');
       if (cached) {
         const parsed = JSON.parse(cached);
         if (Array.isArray(parsed.events) && parsed.events.length > 0) {
-          setCultureEvents(parsed.events);
+          const valid = parsed.events.filter(e => {
+            const end = e.eventEndDate || e.eventStartDate;
+            return !end || end >= todayStr;
+          });
+          setCultureEvents(valid);
         }
       }
     } catch (e) {
@@ -139,21 +140,33 @@ export default function App() {
     }
   };
 
-  // 整合精選與文化部開放資料
+  // 整合精選與文化部開放資料（過濾已過期活動，確保呈現最新檔期）
   const allEvents = useMemo(() => {
-    return mergeEvents(MOCK_EVENTS, cultureEvents, dataSource);
+    const todayStr = getEffectiveTodayStr();
+    const merged = mergeEvents(MOCK_EVENTS, cultureEvents, dataSource);
+    return merged.filter(evt => {
+      const end = evt.eventEndDate || evt.eventStartDate;
+      return !end || end >= todayStr;
+    });
   }, [cultureEvents, dataSource]);
 
-  // 即將搶票 / 需預約的熱門活動 (未來14天內開搶或名額告急)
+  // 即將搶票 / 需預約的熱門活動 (未來14天內開搶或名額告急，且絕無過期)
   const urgentEvents = useMemo(() => {
-    return allEvents.filter(
-      evt => evt.bookingStatus === 'booking_soon' || evt.bookingStatus === 'almost_full'
-    );
+    const todayStr = getEffectiveTodayStr();
+    return allEvents.filter(evt => {
+      const end = evt.eventEndDate || evt.eventStartDate;
+      if (end && end < todayStr) return false;
+      return evt.bookingStatus === 'booking_soon' || evt.bookingStatus === 'almost_full';
+    });
   }, [allEvents]);
 
   // 多重條件過濾邏輯
   const filteredEvents = useMemo(() => {
+    const todayStr = getEffectiveTodayStr();
     return allEvents.filter(evt => {
+      // 0. 過期雙重防護（已結束活動直接剔除）
+      const end = evt.eventEndDate || evt.eventStartDate;
+      if (end && end < todayStr) return false;
       // 1. 地區與縣市
       if (selectedCounty !== 'all') {
         if (selectedCounty === '新竹' || selectedCounty === '新竹縣市') {
