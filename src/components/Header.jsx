@@ -164,14 +164,15 @@ export default function Header({
             <span className="quick-tags-label">熱門快搜：</span>
             {[
               { label: '🛍️ 週末百貨帶動唱', query: '帶動唱' },
+              { label: '🌊 青草湖光影節', query: '青草湖' },
+              { label: '🪁 新竹童樂會', query: '新竹童樂會' },
               { label: '🎪 週末商場表演', query: '表演' },
               { label: '🎤 人偶見面會', query: '見面會' },
               { label: '🫧 奇幻泡泡秀', query: '泡泡' },
               { label: '🏬 全台百貨', query: '百貨' },
               { label: '🎭 兒童劇團', query: '劇團' },
               { label: '🎄 新北耶誕城', query: '耶誕' },
-              { label: '📸 IG熱推', query: '推薦' },
-              { label: '🐷 豬探長', query: '豬探長' }
+              { label: '📸 IG熱推', query: '推薦' }
             ].map((item) => (
               <button
                 key={item.query}

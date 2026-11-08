@@ -171,6 +171,10 @@ export default function App() {
       if (selectedCounty !== 'all') {
         if (selectedCounty === '新竹' || selectedCounty === '新竹縣市') {
           if (!evt.county.includes('新竹')) return false;
+        } else if (selectedCounty === '新竹市') {
+          if (evt.county !== '新竹市' && evt.county !== '新竹') return false;
+        } else if (selectedCounty === '新竹縣') {
+          if (evt.county !== '新竹縣' && evt.county !== '新竹') return false;
         } else if (selectedCounty === '嘉義' || selectedCounty === '嘉義縣市') {
           if (!evt.county.includes('嘉義')) return false;
         } else if (evt.county !== selectedCounty) {
