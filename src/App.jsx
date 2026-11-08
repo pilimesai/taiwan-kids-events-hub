@@ -57,20 +57,12 @@ export default function App() {
     return `${y}-${m}-${d}`;
   };
 
-  // 載入 localStorage 快取 (若使用者先前曾線上同步過更即時的資料，自動濾除過期活動)
+  // 載入與初始化活動快取 (自動濾除過期活動，並無縫合併最新各縣市節慶、文創特展與百貨活動)
   useEffect(() => {
     try {
-      const todayStr = getEffectiveTodayStr();
-      const cached = localStorage.getItem('tw_kids_culture_cache');
-      if (cached) {
-        const parsed = JSON.parse(cached);
-        if (Array.isArray(parsed.events) && parsed.events.length > 0) {
-          const valid = parsed.events.filter(e => {
-            const end = e.eventEndDate || e.eventStartDate;
-            return !end || end >= todayStr;
-          });
-          setCultureEvents(valid);
-        }
+      const initial = getInitialCultureEvents();
+      if (initial && initial.length > 0) {
+        setCultureEvents(initial);
       }
     } catch (e) {
       console.warn('讀取本地快取失敗:', e);
@@ -231,34 +223,46 @@ export default function App() {
         const q = searchTerm.trim().toLowerCase();
         const isGenericQuery = ['新活動', '最新活動', '最新', '活動', '全部活動', '所有活動'].includes(q);
         if (!isGenericQuery) {
-          const matchTitle = evt.title.toLowerCase().includes(q);
-          const matchVenue = evt.venue.toLowerCase().includes(q);
-          const matchCounty = evt.county.toLowerCase().includes(q);
+          const matchTitle = evt.title?.toLowerCase().includes(q);
+          const matchVenue = evt.venue?.toLowerCase().includes(q);
+          const matchCounty = evt.county?.toLowerCase().includes(q);
           const matchAddress = evt.address?.toLowerCase().includes(q);
+          const matchDesc = evt.description?.toLowerCase().includes(q);
           const matchHighlights = evt.highlights?.some(h => h.toLowerCase().includes(q));
           const matchNotice = evt.notice?.toLowerCase().includes(q);
           const matchOrganizer = evt.organizer?.toLowerCase().includes(q);
           const matchPlatform = evt.bookingPlatform?.toLowerCase().includes(q);
+          const matchUrl = evt.bookingUrl?.toLowerCase().includes(q);
           const matchDept = (q.includes('百貨') || q.includes('商場')) && (evt.category === 'department_store' || evt.sourceType === 'department_store');
-          const matchSingalong = (q.includes('帶動唱') || q.includes('唱跳')) && (evt.title.includes('唱跳') || evt.title.includes('帶動唱') || evt.highlights?.some(h => h.includes('唱跳') || h.includes('帶動唱')));
-          const matchShow = (q.includes('表演') || q.includes('秀') || q.includes('偶戲') || q.includes('魔術')) && (evt.title.includes('表演') || evt.title.includes('秀') || evt.title.includes('偶戲') || evt.title.includes('魔術') || evt.highlights?.some(h => h.includes('表演') || h.includes('秀')));
-          const matchMeet = (q.includes('見面會') || q.includes('同樂會') || q.includes('見面')) && (evt.title.includes('見面會') || evt.title.includes('同樂會') || evt.title.includes('見面') || evt.highlights?.some(h => h.includes('見面會') || h.includes('同樂會')));
-          const matchBubble = q.includes('泡泡') && (evt.title.includes('泡泡') || evt.highlights?.some(h => h.includes('泡泡')));
+          const matchSingalong = (q.includes('帶動唱') || q.includes('唱跳')) && (evt.title?.includes('唱跳') || evt.title?.includes('帶動唱') || evt.highlights?.some(h => h.includes('唱跳') || h.includes('帶動唱')));
+          const matchShow = (q.includes('表演') || q.includes('秀') || q.includes('偶戲') || q.includes('魔術')) && (evt.title?.includes('表演') || evt.title?.includes('秀') || evt.title?.includes('偶戲') || evt.title?.includes('魔術') || evt.highlights?.some(h => h.includes('表演') || h.includes('秀')));
+          const matchMeet = (q.includes('見面會') || q.includes('同樂會') || q.includes('見面')) && (evt.title?.includes('見面會') || evt.title?.includes('同樂會') || evt.title?.includes('見面') || evt.highlights?.some(h => h.includes('見面會') || h.includes('同樂會')));
+          const matchBubble = q.includes('泡泡') && (evt.title?.includes('泡泡') || evt.highlights?.some(h => h.includes('泡泡')));
+          const matchArtTech = (q.includes('科技') || q.includes('藝術節') || q.includes('taxt') || q.includes('文創')) && (
+            evt.title?.toLowerCase().includes('科技') ||
+            evt.title?.toLowerCase().includes('藝術節') ||
+            evt.title?.toLowerCase().includes('taxt') ||
+            evt.venue?.toLowerCase().includes('文創') ||
+            evt.highlights?.some(h => h.toLowerCase().includes('科技') || h.toLowerCase().includes('藝術節') || h.toLowerCase().includes('文創'))
+          );
 
           if (
             !matchTitle &&
             !matchVenue &&
             !matchCounty &&
             !matchAddress &&
+            !matchDesc &&
             !matchHighlights &&
             !matchNotice &&
             !matchOrganizer &&
             !matchPlatform &&
+            !matchUrl &&
             !matchDept &&
             !matchSingalong &&
             !matchShow &&
             !matchMeet &&
-            !matchBubble
+            !matchBubble &&
+            !matchArtTech
           ) {
             return false;
           }
@@ -332,6 +336,50 @@ export default function App() {
 
     // 跨來源動態即時深層搜尋（自動穿透地方政府觀光節慶、文化部與商場 Feed）
     if (termToSearch.trim()) {
+      const q = termToSearch.trim().toLowerCase();
+
+      // 自動跨區適配：若搜尋特定外縣市或當前縣市無匹配但全國有匹配，自動適配縣市以呈現精彩結果
+      const countyAliases = [
+        { key: '臺北市', names: ['台北', '臺北', '華山', '士林官邸'] },
+        { key: '新北市', names: ['新北', '三鶯', '鶯歌'] },
+        { key: '基隆市', names: ['基隆'] },
+        { key: '桃園市', names: ['桃園', '中原', '中壢', 'taxt'] },
+        { key: '新竹市', names: ['新竹', '青草湖', '湳雅'] },
+        { key: '新竹縣', names: ['竹北'] },
+        { key: '苗栗縣', names: ['苗栗'] },
+        { key: '臺中市', names: ['台中', '臺中', '新社'] },
+        { key: '彰化縣', names: ['彰化'] },
+        { key: '南投縣', names: ['南投'] },
+        { key: '雲林縣', names: ['雲林'] },
+        { key: '嘉義市', names: ['嘉義'] },
+        { key: '臺南市', names: ['台南', '臺南', '安平'] },
+        { key: '高雄市', names: ['高雄', '駁二'] },
+        { key: '屏東縣', names: ['屏東'] },
+        { key: '宜蘭縣', names: ['宜蘭'] },
+        { key: '花蓮縣', names: ['花蓮'] },
+        { key: '臺東縣', names: ['台東', '臺東'] }
+      ];
+
+      const foundCounty = countyAliases.find(c => c.names.some(n => q.includes(n)));
+      if (foundCounty && selectedCounty !== foundCounty.key && selectedCounty !== 'all') {
+        setSelectedCounty(foundCounty.key);
+        setSelectedRegion('all');
+      } else if (selectedCounty !== 'all') {
+        const matchedInCounty = cultureEvents.some(evt =>
+          evt.county === selectedCounty &&
+          (evt.title?.toLowerCase().includes(q) || evt.venue?.toLowerCase().includes(q) || evt.highlights?.some(h => h.toLowerCase().includes(q)))
+        );
+        if (!matchedInCounty) {
+          const matchedNationwide = cultureEvents.some(evt =>
+            evt.title?.toLowerCase().includes(q) || evt.venue?.toLowerCase().includes(q) || evt.highlights?.some(h => h.toLowerCase().includes(q))
+          );
+          if (matchedNationwide) {
+            setSelectedCounty('all');
+            setSelectedRegion('all');
+          }
+        }
+      }
+
       const enriched = searchAllEventsLive(termToSearch.trim(), cultureEvents);
       if (enriched.length > cultureEvents.length) {
         setCultureEvents(enriched);

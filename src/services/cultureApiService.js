@@ -109,22 +109,42 @@ export function isEventExpired(event, todayStr = getTodayDateStr()) {
  */
 export function getInitialCultureEvents() {
   const todayStr = getTodayDateStr();
+  let baseEvents = [];
   try {
     const cached = localStorage.getItem('tw_kids_culture_cache');
     if (cached) {
       const parsed = JSON.parse(cached);
       if (Array.isArray(parsed.events) && parsed.events.length > 0) {
-        const validEvents = parsed.events.filter(e => !isEventExpired(e, todayStr));
-        if (validEvents.length > 0) {
-          return validEvents;
-        }
+        baseEvents = parsed.events.filter(e => !isEventExpired(e, todayStr));
       }
     }
   } catch (e) {
     console.warn('讀取本地快取失敗:', e);
   }
+
+  // 確保靜態資料庫（含最新各縣市節慶 Feed、文創特展與商場特展）完整合併，防止快取遺漏新活動
   const staticList = Array.isArray(staticCultureEvents) ? staticCultureEvents : [];
-  return staticList.filter(e => !isEventExpired(e, todayStr));
+  const validStatic = staticList.filter(e => !isEventExpired(e, todayStr));
+  const validMuni = (MUNICIPAL_FESTIVALS_FEED || []).filter(e => !isEventExpired(e, todayStr));
+  const validDept = (DEPARTMENT_STORE_EVENTS || []).filter(e => !isEventExpired(e, todayStr));
+
+  const existingIds = new Set(baseEvents.map(e => e.id));
+  const newlyAdded = [...validMuni, ...validDept, ...validStatic].filter(e => !existingIds.has(e.id));
+  const merged = [...baseEvents, ...newlyAdded];
+
+  // 若有合併新活動，自動寫回本地快取以加速後續檢索
+  if (newlyAdded.length > 0 && typeof localStorage !== 'undefined') {
+    try {
+      localStorage.setItem('tw_kids_culture_cache', JSON.stringify({
+        timestamp: Date.now(),
+        events: merged
+      }));
+    } catch {
+      // ignore storage errors
+    }
+  }
+
+  return merged;
 }
 
 /**
@@ -139,7 +159,8 @@ export async function fetchLiveCultureEvents() {
     '沉浸', '天文', '科博', '科教', '陶藝', '童話', '魔術', '體驗', '音樂會', '光影',
     '藝術節', '水舞', '煙火', '燈節', '燈會', '光雕', '投影', '玻璃', '琉璃', '購物節',
     '商圈', '觀光', '野餐', '露營', '放電', '闖關', '見面會', '帶動唱', '人偶', '職人',
-    '打擊樂', '馬戲', '特技', '小丑', '氣球', '泡泡', '大氣球', '踩街'
+    '打擊樂', '馬戲', '特技', '小丑', '氣球', '泡泡', '大氣球', '踩街',
+    '科技藝術', '文創', '園區', '科技節', '生成式', 'AI', '數位藝術', '互動藝術', '創客'
   ];
 
   try {
@@ -339,15 +360,29 @@ export function searchAllEventsLive(query = '', currentEvents = []) {
 
   for (const evt of allSources) {
     if (seenIds.has(evt.id)) continue;
-    const matchTitle = evt.title.toLowerCase().includes(q);
+    const matchTitle = evt.title?.toLowerCase().includes(q);
     const matchVenue = evt.venue?.toLowerCase().includes(q);
     const matchCounty = evt.county?.toLowerCase().includes(q);
     const matchAddress = evt.address?.toLowerCase().includes(q);
+    const matchDesc = evt.description?.toLowerCase().includes(q);
     const matchHighlights = evt.highlights?.some(h => h.toLowerCase().includes(q));
     const matchNotice = evt.notice?.toLowerCase().includes(q);
     const matchOrganizer = evt.organizer?.toLowerCase().includes(q);
+    const matchUrl = evt.bookingUrl?.toLowerCase().includes(q);
+    const matchPlatform = evt.bookingPlatform?.toLowerCase().includes(q);
 
-    if (matchTitle || matchVenue || matchCounty || matchAddress || matchHighlights || matchNotice || matchOrganizer) {
+    if (
+      matchTitle ||
+      matchVenue ||
+      matchCounty ||
+      matchAddress ||
+      matchDesc ||
+      matchHighlights ||
+      matchNotice ||
+      matchOrganizer ||
+      matchUrl ||
+      matchPlatform
+    ) {
       seenIds.add(evt.id);
       newDiscovered.push(evt);
     }

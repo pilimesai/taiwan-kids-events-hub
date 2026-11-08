@@ -1,9 +1,43 @@
 /**
- * 全台各縣市政府地方觀光節慶、城市特色活動與市政童樂盛典開放資料 Feed
- * 涵蓋新竹市、雙北、桃竹苗、台中、台南、高雄等各縣市觀光旅遊局、文化局、城銷處與產發處大型活動
+ * 全台各縣市政府地方觀光節慶、城市特色活動、文創園區特展與市政童樂盛典開放資料 Feed
+ * 涵蓋桃園市、新竹市、雙北、台中、台南、高雄等各縣市文化局、觀光旅遊局、城銷處與產發處大型活動
  */
 
 export const MUNICIPAL_FESTIVALS_FEED = [
+  // --- 桃園市 地方指標科技藝術節與盛典 ---
+  {
+    id: 'muni-taoyuan-taxt-2026',
+    title: '【2026 TAxT 桃園科技藝術節】《Be Tokens 現實世界>>>生成中》：生成式AI聲光劇場 ‧ 沉浸互動感測裝置 ‧ 戶外科技表演',
+    category: 'exhibition',
+    region: 'north',
+    county: '桃園市',
+    venue: '中原文創園區 1、2、3、10、14倉及戶外空間',
+    address: '桃園市中壢區忠仁路33號（中原文創園區）',
+    eventStartDate: '2026-10-30',
+    eventEndDate: '2026-11-22',
+    bookingStatus: 'free_walkin',
+    bookingOpenDate: '2026-10-30 10:00',
+    bookingPlatform: '全區自由免費入場（10:00-18:00，週一休園）',
+    bookingUrl: 'https://www.taxt.tw/news/',
+    ticketPrice: '完全免費（免門票自由參觀體驗）',
+    isFree: true,
+    minAge: 0,
+    maxAge: 99,
+    ageLabel: '全年齡科技與親子探索',
+    indoorOutdoor: 'both',
+    indoorOutdoorLabel: '文創園區老倉庫室內＋戶外開闊草皮空間',
+    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80',
+    highlights: [
+      '第10屆指標性全台最大科技藝術節！台大資工系教授策展，探討生成式AI、算力與人類未來的奇幻對話',
+      '匯聚台、日、法、德跨國藝術家打造 11 組沉浸式聲光劇場、AI生成互動感測與精密動態機械裝置',
+      '同步展出「桃園科技表演藝術獎」金獎銀獎作品，中原文創園區戶外大草坪週末設有文創童樂市集與街頭表演'
+    ],
+    notice: '展期至 11/22(日) 止！週一休園，每日 10:00-18:00 開放入場。園區設有收費停車場，鄰近中原夜市美食商圈。',
+    organizer: '桃園市政府 / 桃園市政府文化局',
+    sourceType: 'municipal_feed',
+    sourceWebName: 'TAxT 桃園科技藝術節官方網站 / 桃園市政府文化局'
+  },
+
   // --- 新竹市 / 新竹縣 地方盛典 ---
   {
     id: 'muni-hsinchu-grasslake-light',
@@ -134,7 +168,39 @@ export const MUNICIPAL_FESTIVALS_FEED = [
     sourceWebName: '新竹市新鮮事 / 新竹市產業發展處'
   },
 
-  // --- 雙北地區 地方盛典 ---
+  // --- 雙北地區 文創園區與地方盛典 ---
+  {
+    id: 'muni-taipei-huashan-illustration',
+    title: '【華山1914文創園區】秋冬奇幻插畫繪本節 ‧ 沉浸光影故事屋與戶外大草坪野餐放電',
+    category: 'exhibition',
+    region: 'north',
+    county: '臺北市',
+    venue: '華山1914文化創意產業園區 東2四連棟倉庫 & 華山大草原',
+    address: '台北市中正區八德路一段1號',
+    eventStartDate: '2026-11-07',
+    eventEndDate: '2026-12-27',
+    bookingStatus: 'free_walkin',
+    bookingOpenDate: '2026-11-07 10:00',
+    bookingPlatform: '免門票自由穿梭園區（特展展館單項購票）',
+    bookingUrl: 'https://www.huashan1914.com',
+    ticketPrice: '園區免費參觀拍照（特展 NT$ 280-350）',
+    isFree: true,
+    minAge: 0,
+    maxAge: 99,
+    ageLabel: '全年齡親子文創放風首選',
+    indoorOutdoor: 'both',
+    indoorOutdoorLabel: '老酒廠紅磚倉庫＋超大中央大草原',
+    image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=80',
+    highlights: [
+      '全台文創指標園區！匯聚亞洲人氣插畫家繪本立體造景、文創小物與特色拍貼機',
+      '華山大草坪週末野餐放風聖地，街頭魔術師與七彩泡泡藝人定時與孩子同樂',
+      '捷運忠孝新生站 1 號出口步行 3 分鐘，園區平坦推車極為便利'
+    ],
+    notice: '週末人潮眾多，戶外大草坪可攜帶野餐墊與泡泡槍；園區內設有哺乳室與無障礙廁所。',
+    organizer: '華山1914文化創意產業園區',
+    sourceType: 'municipal_feed',
+    sourceWebName: '華山1914官方活動快報'
+  },
   {
     id: 'muni-taipei-chrysanthemum',
     title: '【2026士林官邸菊展】童趣秋遊花藝嘉年華 ‧ 綠雕花卉迷宮 ‧ 週末草地街頭魔術表演',
@@ -166,6 +232,38 @@ export const MUNICIPAL_FESTIVALS_FEED = [
     organizer: '台北市政府工務局公園路燈工程管理處',
     sourceType: 'municipal_feed',
     sourceWebName: '台北旅遊網官方活動'
+  },
+  {
+    id: 'muni-newtaipei-ntmofa-art',
+    title: '【新北市立美術館】園區戶外藝術同樂節：巨型地景雕塑 ‧ 親子陶藝彩繪與水岸野餐',
+    category: 'exhibition',
+    region: 'north',
+    county: '新北市',
+    venue: '新北市立美術館 戶外藝術街區與三鶯之心空間藝術特區',
+    address: '新北市鶯歌區館前路300號',
+    eventStartDate: '2026-11-14',
+    eventEndDate: '2026-12-27',
+    bookingStatus: 'free_walkin',
+    bookingOpenDate: '2026-11-14 10:00',
+    bookingPlatform: '全區戶外園區完全免費參觀',
+    bookingUrl: 'https://ntmoa.tw',
+    ticketPrice: '免費入場（手作體驗單項另計）',
+    isFree: true,
+    minAge: 0,
+    maxAge: 99,
+    ageLabel: '全年齡水岸藝術漫遊',
+    indoorOutdoor: 'both',
+    indoorOutdoorLabel: '開闊水岸綠地＋現代美術館建築',
+    image: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=900&q=80',
+    highlights: [
+      '蘆葦意象純白現代建築與三鶯水岸連成一氣，超美巨型戶外地景陶藝雕塑',
+      '週末特設兒童藝術手作工坊：泥巴手捏感統、彩繪陶瓷吸水杯墊體驗',
+      '台鐵鶯歌站步行約 8 分鐘經農會通廊直達，鄰近鶯歌陶瓷老街'
+    ],
+    notice: '戶外園區全天開放，室內展區週一休館。園區腹地廣大，推薦自備遮陽用品與野餐墊。',
+    organizer: '新北市政府文化局 / 新北市立美術館',
+    sourceType: 'municipal_feed',
+    sourceWebName: '新北市立美術館官方活動'
   },
 
   // --- 台中地區 地方盛典 ---
@@ -234,5 +332,39 @@ export const MUNICIPAL_FESTIVALS_FEED = [
     organizer: '台南市政府觀光旅遊局',
     sourceType: 'municipal_feed',
     sourceWebName: '台南旅遊網官方活動'
+  },
+
+  // --- 高雄地區 文創園區盛典 ---
+  {
+    id: 'muni-kaohsiung-pier2-creative',
+    title: '【高雄駁二藝術特區】大勇與大義倉庫假日童樂季 ‧ 港灣輕軌奇幻塗鴉大漫遊 ‧ 週末草地手作市集',
+    category: 'exhibition',
+    region: 'south',
+    county: '高雄市',
+    venue: '駁二藝術特區 大勇P2倉庫、大義C6倉庫前綠地',
+    address: '高雄市鹽埕區大勇路1號',
+    eventStartDate: '2026-11-07',
+    eventEndDate: '2026-12-27',
+    bookingStatus: 'free_walkin',
+    bookingOpenDate: '2026-11-07 11:00',
+    bookingPlatform: '全區免費漫遊參觀（特展展覽另行購票）',
+    bookingUrl: 'https://pier2.org',
+    ticketPrice: '全區免費散步',
+    isFree: true,
+    minAge: 0,
+    maxAge: 99,
+    ageLabel: '全家大小海港文創同樂',
+    indoorOutdoor: 'both',
+    indoorOutdoorLabel: '海港老倉庫群＋草地鐵道無障礙空間',
+    image: 'https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=900&q=80',
+    highlights: [
+      '高雄指標文創港灣！巨型工人與漁婦地標公仔、彩色塗鴉大壁畫與哈瑪星鐵道草坪放電',
+      '週末特設小手手創意文創市集，街頭藝人雜耍拋球、神奇魔術與造型氣球發放',
+      '高雄輕軌直達駁二大義站與駁二蓬萊站，推車完全平順無階梯障礙'
+    ],
+    notice: '海港午後海風舒服宜人，建議搭乘輕軌前往。園區各大倉庫設有無障礙洗手間與哺集乳室。',
+    organizer: '高雄市政府文化局 / 駁二藝術特區',
+    sourceType: 'municipal_feed',
+    sourceWebName: '駁二藝術特區官方活動快訊'
   }
 ];
