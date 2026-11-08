@@ -113,16 +113,20 @@ export async function syncCultureEvents() {
   const todayStr = `${y}-${m}-${d}`;
   console.log(`📅 當前基準日期: ${todayStr} (自動濾除已過期活動)`);
 
-  const categories = [1, 2, 4, 6, 7, 8];
+  const categories = [1, 2, 3, 4, 5, 6, 7, 8, 17];
   const allResults = await Promise.all(categories.map(fetchCategory));
   const rawList = allResults.flat();
   console.log(`📥 文化部原始活動取得筆數: ${rawList.length}`);
 
+  // 全面涵蓋親子家庭、地方節慶、城市光影、藝術展覽、購物商圈與童樂演出
   const kidKeywords = [
-    '親子', '兒童', '童樂', '偶戲', '繪本', '寶寶', '恐龍', '積木', '探索', '動漫',
-    '科學', '家庭', '小朋友', '劇團', '如果兒童', '紙風車', '蘋果劇團', '巧虎',
-    '音樂劇', '工作坊', '手作', '草地', '嘉年華', '市集', '沈浸', '沉浸', '天文', '科博', '科教',
-    '陶藝', '童話', '魔術', '體驗', '音樂會'
+    '親子', '兒童', '童樂', '同樂', '偶戲', '繪本', '寶寶', '幼兒', '幼童', '恐龍',
+    '積木', '探索', '動漫', '科學', '家庭', '小朋友', '劇團', '如果兒童', '紙風車',
+    '蘋果劇團', '巧虎', '音樂劇', '工作坊', '手作', '草地', '嘉年華', '市集', '沈浸',
+    '沉浸', '天文', '科博', '科教', '陶藝', '童話', '魔術', '體驗', '音樂會', '光影',
+    '藝術節', '水舞', '煙火', '燈節', '燈會', '光雕', '投影', '玻璃', '琉璃', '購物節',
+    '商圈', '觀光', '野餐', '露營', '放電', '闖關', '見面會', '帶動唱', '人偶', '職人',
+    '打擊樂', '馬戲', '特技', '小丑', '氣球', '泡泡', '大氣球', '踩街'
   ];
 
   const processedEvents = [];
@@ -255,6 +259,20 @@ export async function syncCultureEvents() {
 
   console.log(`✅ 親子精選活動處理完成，共萃取 ${processedEvents.length} 筆文化部活動！`);
 
+  // 加入全台各縣市政府觀光節慶、城市特色活動與市政童樂盛典 Feed
+  let municipalEvents = [];
+  try {
+    const muniModule = await import('../src/data/municipalFestivalsFeed.js');
+    const rawMuniEvents = muniModule.MUNICIPAL_FESTIVALS_FEED || [];
+    municipalEvents = rawMuniEvents.filter(e => {
+      const end = e.eventEndDate || e.eventStartDate;
+      return !end || end >= todayStr;
+    });
+    console.log(`🏛️ 已成功納入全台各縣市政府觀光與地方節慶活動: ${municipalEvents.length} 檔！`);
+  } catch (err) {
+    console.warn('載入地方政府活動失敗:', err.message);
+  }
+
   // 加入全台各大百貨商場最新特展與快閃活動（過濾已過期）
   let deptEvents = [];
   try {
@@ -269,7 +287,7 @@ export async function syncCultureEvents() {
     console.warn('載入百貨商場活動失敗:', err.message);
   }
 
-  const allCombined = [...deptEvents, ...processedEvents].filter(e => {
+  const allCombined = [...municipalEvents, ...deptEvents, ...processedEvents].filter(e => {
     const end = e.eventEndDate || e.eventStartDate;
     return !end || end >= todayStr;
   });

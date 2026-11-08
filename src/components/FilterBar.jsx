@@ -227,7 +227,8 @@ export default function FilterBar({
               onChange={(e) => onDataSourceChange?.(e.target.value)}
               className="condition-select highlight-source"
             >
-              <option value="all">🌟 全台全部活動 (百貨商場 + 文化部 + 精選)</option>
+              <option value="all">🌟 全台全部活動 (地方觀光節慶 + 百貨商場 + 文化部 + 精選)</option>
+              <option value="municipal">🏛️ 各縣市政府觀光與地方節慶 (新竹/雙北/台中/台南等)</option>
               <option value="department">🛍️ 各大百貨商場特展快閃 (新光三越/SOGO/巨城/三井/漢神)</option>
               <option value="culture">🏛️ 文化部 iCulture 即時開放資料</option>
               <option value="curated">🎯 特色精選搶票活動</option>

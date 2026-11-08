@@ -6,7 +6,8 @@ import {
 import {
   getInitialCultureEvents,
   fetchLiveCultureEvents,
-  mergeEvents
+  mergeEvents,
+  searchAllEventsLive
 } from './services/cultureApiService';
 import TaiwanMap from './components/TaiwanMap';
 import Header from './components/Header';
@@ -108,12 +109,12 @@ export default function App() {
     );
   };
 
-  // 即時連線尋找全台最新活動 (文化部 API + 全台各大百貨商場)
+  // 即時連線尋找全台最新活動 (文化部 API + 全台各縣市政府觀光節慶 Feed + 各大百貨商場)
   const handleFindNewEvents = async () => {
     setIsSyncing(true);
     setSyncToast({
       type: 'info',
-      message: '正在為您連線文化部與全台各大百貨商場，搜尋最新親子活動...'
+      message: '正在為您跨來源連線文化部、各縣市政府觀光節慶與各大百貨商場，搜尋最新親子活動...'
     });
     try {
       const fresh = await fetchLiveCultureEvents();
@@ -121,7 +122,7 @@ export default function App() {
         setCultureEvents(fresh);
         setSyncToast({
           type: 'success',
-          message: `🎉 尋找完成！已成功更新 ${fresh.length} 檔最新活動（含各大百貨快閃特展與文化部開放資料）！`
+          message: `🎉 尋找完成！已成功整合更新 ${fresh.length} 檔最新活動（含地方觀光光影節、童樂會、商場帶動唱與藝文開放資料）！`
         });
       } else {
         setSyncToast({
@@ -329,13 +330,23 @@ export default function App() {
     }
     setMobileTab('list');
 
-    // 即時提示搜尋反饋
+    // 跨來源動態即時深層搜尋（自動穿透地方政府觀光節慶、文化部與商場 Feed）
     if (termToSearch.trim()) {
-      setSyncToast({
-        type: 'info',
-        message: `🔎 為您檢索「${termToSearch.trim()}」，即刻呈現全台相關精彩活動！`
-      });
-      setTimeout(() => setSyncToast(null), 3000);
+      const enriched = searchAllEventsLive(termToSearch.trim(), cultureEvents);
+      if (enriched.length > cultureEvents.length) {
+        setCultureEvents(enriched);
+        setSyncToast({
+          type: 'success',
+          message: `🎯 智慧搜尋命中！已動態為您檢索並整合「${termToSearch.trim()}」的最新活動！`
+        });
+        setTimeout(() => setSyncToast(null), 3500);
+      } else {
+        setSyncToast({
+          type: 'info',
+          message: `🔎 為您檢索「${termToSearch.trim()}」，即刻呈現全台相關精彩活動！`
+        });
+        setTimeout(() => setSyncToast(null), 3000);
+      }
     }
 
     setTimeout(() => {

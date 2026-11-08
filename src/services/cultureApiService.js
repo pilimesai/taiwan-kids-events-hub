@@ -1,8 +1,9 @@
 /**
- * 全台親子活動即時搜尋與同步服務 (文化部 iCulture 開放資料 + 全台各大百貨商場特展)
+ * 全台親子活動即時搜尋與同步服務 (文化部 iCulture 開放資料 + 全台各縣市觀光節慶 Feed + 全台各大百貨商場特展)
  */
 import staticCultureEvents from '../data/cultureEvents.json';
 import { DEPARTMENT_STORE_EVENTS } from '../data/departmentStoreEvents.js';
+import { MUNICIPAL_FESTIVALS_FEED } from '../data/municipalFestivalsFeed.js';
 
 const COUNTIES = [
   '臺北市', '台北市', '新北市', '基隆市', '桃園市', '新竹市', '新竹縣', '苗栗縣',
@@ -127,14 +128,18 @@ export function getInitialCultureEvents() {
 }
 
 /**
- * 瀏覽器在線直接同步搜尋最新活動 (含文化部即時開放資料 + 全台各大百貨商場最新特展)
+ * 瀏覽器在線直接同步搜尋最新活動 (含文化部即時開放資料 + 各縣市觀光節慶 Feed + 全台各大百貨商場最新特展)
  */
 export async function fetchLiveCultureEvents() {
+  // 全面涵蓋親子家庭、地方節慶、城市光影、藝術展覽、購物商圈與童樂演出
   const kidKeywords = [
-    '親子', '兒童', '童樂', '偶戲', '繪本', '寶寶', '恐龍', '積木', '探索', '動漫',
-    '科學', '家庭', '小朋友', '劇團', '如果兒童', '紙風車', '蘋果劇團', '巧虎',
-    '音樂劇', '工作坊', '手作', '草地', '嘉年華', '市集', '沈浸', '沉浸', '天文', '科博', '科教',
-    '陶藝', '童話', '魔術', '體驗', '音樂會'
+    '親子', '兒童', '童樂', '同樂', '偶戲', '繪本', '寶寶', '幼兒', '幼童', '恐龍',
+    '積木', '探索', '動漫', '科學', '家庭', '小朋友', '劇團', '如果兒童', '紙風車',
+    '蘋果劇團', '巧虎', '音樂劇', '工作坊', '手作', '草地', '嘉年華', '市集', '沈浸',
+    '沉浸', '天文', '科博', '科教', '陶藝', '童話', '魔術', '體驗', '音樂會', '光影',
+    '藝術節', '水舞', '煙火', '燈節', '燈會', '光雕', '投影', '玻璃', '琉璃', '購物節',
+    '商圈', '觀光', '野餐', '露營', '放電', '闖關', '見面會', '帶動唱', '人偶', '職人',
+    '打擊樂', '馬戲', '特技', '小丑', '氣球', '泡泡', '大氣球', '踩街'
   ];
 
   try {
@@ -154,7 +159,7 @@ export async function fetchLiveCultureEvents() {
       }
     } catch {
       // 備援方案：依類別個別抓取
-      const categories = [1, 2, 4, 6, 7, 8];
+      const categories = [1, 2, 3, 4, 5, 6, 7, 8, 17];
       const fetchPromises = categories.map(async (cat) => {
         try {
           const controller = new AbortController();
@@ -284,10 +289,11 @@ export async function fetchLiveCultureEvents() {
       }
     }
 
-    // 將全台各大百貨商場特展快閃活動合併（排除過期）
+    // 將全台各縣市政府觀光節慶 Feed 與各大百貨商場活動合併（排除過期）
     const todayStr = getTodayDateStr();
+    const validMuniEvents = (MUNICIPAL_FESTIVALS_FEED || []).filter(e => !isEventExpired(e, todayStr));
     const validDeptEvents = (DEPARTMENT_STORE_EVENTS || []).filter(e => !isEventExpired(e, todayStr));
-    const allCombined = [...validDeptEvents, ...processed].filter(e => !isEventExpired(e, todayStr));
+    const allCombined = [...validMuniEvents, ...validDeptEvents, ...processed].filter(e => !isEventExpired(e, todayStr));
 
     if (allCombined.length > 0) {
       try {
@@ -304,10 +310,50 @@ export async function fetchLiveCultureEvents() {
   } catch (err) {
     console.error('線上尋找最新活動失敗:', err);
     const todayStr = getTodayDateStr();
+    const validMuni = (MUNICIPAL_FESTIVALS_FEED || []).filter(e => !isEventExpired(e, todayStr));
     const validDept = (DEPARTMENT_STORE_EVENTS || []).filter(e => !isEventExpired(e, todayStr));
     const validStatic = (staticCultureEvents || []).filter(e => !isEventExpired(e, todayStr));
-    return [...validDept, ...validStatic];
+    return [...validMuni, ...validDept, ...validStatic];
   }
+}
+
+/**
+ * 跨來源全域即時深層搜尋 (搜尋時自動穿透比對文化部、各縣市節慶 Feed 與各大商場)
+ * 確保任何活動（如光影節、童樂會、玻璃展、購物節、帶動唱）皆能立即檢索出
+ */
+export function searchAllEventsLive(query = '', currentEvents = []) {
+  if (!query || !query.trim()) return currentEvents;
+  const q = query.trim().toLowerCase();
+  const todayStr = getTodayDateStr();
+
+  // 匯整全台所有潛在資料庫與即時 Feed
+  const allSources = [
+    ...(MUNICIPAL_FESTIVALS_FEED || []),
+    ...(DEPARTMENT_STORE_EVENTS || []),
+    ...(staticCultureEvents || []),
+    ...currentEvents
+  ].filter(e => !isEventExpired(e, todayStr));
+
+  const seenIds = new Set(currentEvents.map(e => e.id));
+  const newDiscovered = [];
+
+  for (const evt of allSources) {
+    if (seenIds.has(evt.id)) continue;
+    const matchTitle = evt.title.toLowerCase().includes(q);
+    const matchVenue = evt.venue?.toLowerCase().includes(q);
+    const matchCounty = evt.county?.toLowerCase().includes(q);
+    const matchAddress = evt.address?.toLowerCase().includes(q);
+    const matchHighlights = evt.highlights?.some(h => h.toLowerCase().includes(q));
+    const matchNotice = evt.notice?.toLowerCase().includes(q);
+    const matchOrganizer = evt.organizer?.toLowerCase().includes(q);
+
+    if (matchTitle || matchVenue || matchCounty || matchAddress || matchHighlights || matchNotice || matchOrganizer) {
+      seenIds.add(evt.id);
+      newDiscovered.push(evt);
+    }
+  }
+
+  return [...currentEvents, ...newDiscovered];
 }
 
 /**
@@ -341,6 +387,9 @@ export function mergeEvents(mockEvents = [], cultureEvents = [], dataSource = 'a
   }
   if (dataSource === 'department') {
     return list.filter(e => e.category === 'department_store' || e.sourceType === 'department_store');
+  }
+  if (dataSource === 'municipal') {
+    return list.filter(e => e.sourceType === 'municipal_feed' || e.category === 'government');
   }
   if (dataSource === 'culture') {
     return list.filter(e => e.sourceType === 'culture_tw');
