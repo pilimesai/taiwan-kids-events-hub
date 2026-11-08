@@ -161,16 +161,17 @@ export default function Header({
           </form>
 
           <div className="header-quick-tags">
-            <span className="quick-tags-label">熱門：</span>
+            <span className="quick-tags-label">熱門快搜：</span>
             {[
-              { label: '📸 IG熱推', query: '推薦' },
-              { label: '🎨 造島手作', query: '造島' },
-              { label: '🎭 如果劇團', query: '如果兒童劇團' },
-              { label: '🐷 豬探長', query: '豬探長' },
+              { label: '🛍️ 週末百貨帶動唱', query: '帶動唱' },
+              { label: '🎪 週末商場表演', query: '表演' },
+              { label: '🎤 人偶見面會', query: '見面會' },
+              { label: '🫧 奇幻泡泡秀', query: '泡泡' },
+              { label: '🏬 全台百貨', query: '百貨' },
               { label: '🎭 兒童劇團', query: '劇團' },
-              { label: '🎃 萬聖節', query: '萬聖' },
-              { label: '🎄 耶誕城', query: '耶誕' },
-              { label: '🐶 史努比', query: '史努比' }
+              { label: '🎄 新北耶誕城', query: '耶誕' },
+              { label: '📸 IG熱推', query: '推薦' },
+              { label: '🐷 豬探長', query: '豬探長' }
             ].map((item) => (
               <button
                 key={item.query}

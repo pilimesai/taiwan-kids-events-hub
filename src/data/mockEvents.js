@@ -36,7 +36,7 @@ export const CATEGORIES = [
   { id: 'performance', name: '舞台表演', icon: 'Drama', color: '#EC4899', desc: '劇團巡演、偶戲童話、親子交響樂' },
   { id: 'government', name: '政府活動', icon: 'Landmark', color: '#10B981', desc: '市立圖書館節慶、美術館童樂、公立免門票' },
   { id: 'solar_term', name: '節氣節慶', icon: 'SunMedium', color: '#F97316', desc: '萬聖踩街、立冬野餐、秋收農事、聖誕點燈' },
-  { id: 'department_store', name: '百貨快閃', icon: 'ShoppingBag', color: '#8B5CF6', desc: '新光三越/SOGO/巨城快閃、大型積木展' }
+  { id: 'department_store', name: '百貨同樂', icon: 'ShoppingBag', color: '#8B5CF6', desc: '新光三越/SOGO/巨城/LaLaport 帶動唱、人偶見面會、假日表演、快閃特展' }
 ];
 
 export const AGE_PRESETS = [

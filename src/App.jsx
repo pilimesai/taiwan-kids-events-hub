@@ -231,9 +231,30 @@ export default function App() {
           const matchCounty = evt.county.toLowerCase().includes(q);
           const matchAddress = evt.address?.toLowerCase().includes(q);
           const matchHighlights = evt.highlights?.some(h => h.toLowerCase().includes(q));
+          const matchNotice = evt.notice?.toLowerCase().includes(q);
           const matchOrganizer = evt.organizer?.toLowerCase().includes(q);
           const matchPlatform = evt.bookingPlatform?.toLowerCase().includes(q);
-          if (!matchTitle && !matchVenue && !matchCounty && !matchAddress && !matchHighlights && !matchOrganizer && !matchPlatform) {
+          const matchDept = (q.includes('百貨') || q.includes('商場')) && (evt.category === 'department_store' || evt.sourceType === 'department_store');
+          const matchSingalong = (q.includes('帶動唱') || q.includes('唱跳')) && (evt.title.includes('唱跳') || evt.title.includes('帶動唱') || evt.highlights?.some(h => h.includes('唱跳') || h.includes('帶動唱')));
+          const matchShow = (q.includes('表演') || q.includes('秀') || q.includes('偶戲') || q.includes('魔術')) && (evt.title.includes('表演') || evt.title.includes('秀') || evt.title.includes('偶戲') || evt.title.includes('魔術') || evt.highlights?.some(h => h.includes('表演') || h.includes('秀')));
+          const matchMeet = (q.includes('見面會') || q.includes('同樂會') || q.includes('見面')) && (evt.title.includes('見面會') || evt.title.includes('同樂會') || evt.title.includes('見面') || evt.highlights?.some(h => h.includes('見面會') || h.includes('同樂會')));
+          const matchBubble = q.includes('泡泡') && (evt.title.includes('泡泡') || evt.highlights?.some(h => h.includes('泡泡')));
+
+          if (
+            !matchTitle &&
+            !matchVenue &&
+            !matchCounty &&
+            !matchAddress &&
+            !matchHighlights &&
+            !matchNotice &&
+            !matchOrganizer &&
+            !matchPlatform &&
+            !matchDept &&
+            !matchSingalong &&
+            !matchShow &&
+            !matchMeet &&
+            !matchBubble
+          ) {
             return false;
           }
         }
