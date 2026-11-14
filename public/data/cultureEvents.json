@@ -2120,40 +2120,6 @@
     "sourceWebName": "年代"
   },
   {
-    "id": "culture-6a5e735d26b32427d0604202",
-    "title": "2026年夏季巧虎大型舞臺劇「銀河怪盜的祕密」",
-    "category": "solar_term",
-    "region": "central",
-    "county": "雲林縣",
-    "venue": "國立雲林科技大學雲泰表演廳",
-    "address": "雲林縣斗六市大學路三段123號",
-    "eventStartDate": "2026-10-24",
-    "eventEndDate": "2026-11-13",
-    "bookingStatus": "booking_open",
-    "bookingOpenDate": "2026-10-24 10:00",
-    "bookingPlatform": "年代",
-    "bookingUrl": "https://ticket.com.tw/Application/UTK02/UTK0201_.aspx?PRODUCT_ID=P1CHPEPY",
-    "ticketPrice": "NT$ 1800、1500、1200、1000、800、500",
-    "isFree": false,
-    "minAge": 0,
-    "maxAge": 99,
-    "ageLabel": "全年齡親子皆宜",
-    "indoorOutdoor": "indoor",
-    "indoorOutdoorLabel": "室內專業場館・風雨無阻",
-    "image": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=900&q=80",
-    "highlights": [
-      "演出場館：國立雲林科技大學雲泰表演廳",
-      "場次時間：2026/10/24 14:30",
-      "購票資訊：NT$ 1800、1500、1200、1000、800、500",
-      "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
-    ],
-    "notice": "詳情請見官方購票售票系統或主辦單位最新公告。開演前請依場館規範提早入場。",
-    "organizer": "年代",
-    "isLiveApi": true,
-    "sourceType": "culture_tw",
-    "sourceWebName": "年代"
-  },
-  {
     "id": "culture-6ac7d85426b324165c32e5c7",
     "title": "11月高雄市電影館｜長短腳電影院－好奇寶貝方城市－法國新影像學院兒童動畫短片精選",
     "category": "solar_term",
@@ -2297,10 +2263,10 @@
     "county": "臺中市",
     "venue": "人類文化廳二樓",
     "address": "臺中市40453 臺中市北區館前路一號",
-    "eventStartDate": "2026-11-13",
+    "eventStartDate": "2026-11-14",
     "eventEndDate": "2028-12-31",
     "bookingStatus": "booking_open",
-    "bookingOpenDate": "2026-11-13 10:00",
+    "bookingOpenDate": "2026-11-14 10:00",
     "bookingPlatform": "營運科",
     "bookingUrl": "http://www.nmns.edu.tw/ch/visit/price.htm",
     "ticketPrice": "NT$ 全票100元，半票70元。",
@@ -2313,7 +2279,7 @@
     "image": "https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=900&q=80",
     "highlights": [
       "演出場館：人類文化廳二樓",
-      "場次時間：2026/11/13 09:00",
+      "場次時間：2026/11/14 09:00",
       "購票資訊：NT$ 全票100元，半票70元。",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
@@ -2331,10 +2297,10 @@
     "county": "臺南市",
     "venue": "藍晒圖文創園區",
     "address": "臺南市西門路一段６８９巷５９號",
-    "eventStartDate": "2026-11-14",
+    "eventStartDate": "2026-11-15",
     "eventEndDate": "2029-12-30",
     "bookingStatus": "booking_open",
-    "bookingOpenDate": "2026-11-14 10:00",
+    "bookingOpenDate": "2026-11-15 10:00",
     "bookingPlatform": "sujenbaby",
     "bookingUrl": "https://www.facebook.com/pg/juhauwanyi/events/",
     "ticketPrice": "NT$ 1000↑",
@@ -2347,7 +2313,7 @@
     "image": "https://cloud.culture.tw/e_new_upload/cms/image/A0/B0/C0/D8/E120/F482/d534ef80-bd64-4d22-8f8a-8d864d70748d.jpg",
     "highlights": [
       "演出場館：藍晒圖文創園區",
-      "場次時間：2026/11/14 00:00",
+      "場次時間：2026/11/15 00:00",
       "購票資訊：NT$ 1000↑",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
@@ -2385,7 +2351,7 @@
       "購票資訊：NT$ 憑恐龍卡或展示場門票即可參觀，票價參考：https://www.nmns.edu.tw/ch/visit/ticket/",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
-    "notice": "國立自然科學博物館迎來生命科學廳的華麗轉身，全新常設展《奇幻自然》即日起開幕，展區規劃5大主題，由科博館內近20名研究人員共同策劃，深入淺出呈現自然界的規則與奧祕。踏進展場首先映入眼簾是一件逾400歲的巨大臺灣雲杉標本，觀眾可在體驗區用嗅覺、觸覺感受它的氣味及紋理，還有身長近4公尺，可手動操作的機械...",
+    "notice": "國立自然科學博物館迎來生命科學廳的華麗轉身，全新常設展《奇幻自然》即日起開幕，展區規��5大���題，由科博館內近20名研究人員共同策劃，深入淺出呈現自然界的規則與奧祕。踏進展場首先映入眼簾是一件逾400歲的巨大臺灣雲杉標本，觀眾可在體驗區用嗅覺、觸覺感受它的氣味及紋理，還有身長近4公尺，可手動操作...",
     "organizer": "國立自然科學博物館",
     "isLiveApi": true,
     "sourceType": "culture_tw",
@@ -3440,7 +3406,7 @@
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
     "notice": "文資局自2021年起與 #科工館 合辦「藏水覓趣」、「潛行探索臺灣」特展，今年再度攜手推出第三檔合辦「烽火船說－水下文化資產特展」。本次特展已分別於 國立科學工藝博物館、金門歷史民俗博物館 巡迴展出，吸引6萬人次觀展。第三站回到 文化部文化資產園區，將帶給臺中民眾更深入扎實的水下文化資產故事，以及多...",
-    "organizer": "(中華民國)文化部文化資產局;(中華民國)國立科學工藝博物館",
+    "organizer": "(��華民國)文化部文化資產局;(中華民國)國立科學工藝博物館",
     "isLiveApi": true,
     "sourceType": "culture_tw",
     "sourceWebName": "全國藝文活動資訊系統"
@@ -4969,7 +4935,7 @@
       "公家免門票或藝文推廣自由入場",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
-    "notice": "「光影魔幻樂園」展覽在高雄市電影館夢幻開展！\r\n\r\n從現在開始，爸爸媽媽可以牽起孩子的手，來到電影館一樓，包覆在電影館專為孩子創造的友善空間，我們邀請大家徜徉在魔幻動物園，體會如森林萬花筒繽紛視覺的展場，探索一個又一個以「視覺暫留」產出的驚奇玩具，運用各種藝術形式啟發孩子對電影的興趣與感知。",
+    "notice": "「光影魔幻樂園」展覽在高雄市電影館夢幻開展！\r\n\r\n從現在開始，爸爸媽媽可以牽起孩子的手，��到電影館一樓，包覆在電影館專為孩子創造的友善空間，我們邀請大家徜徉在魔幻動物園，體會如森林萬花筒繽紛視覺的展場，探索一個又一個以「視覺暫留」產出的驚奇玩具，運用各種藝術形式啟發孩子對電影的興趣與感知。",
     "organizer": "高雄市電影館",
     "isLiveApi": true,
     "sourceType": "culture_tw",
@@ -5411,7 +5377,7 @@
       "公家免門票或藝文推廣自由入場",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
-    "notice": "本館為5歲以上的小朋友打造一個適合親子同樂的體驗空間，以擬人化的比喻手法，將「高雄」化身為一位名叫「高小雄」���男孩，搭配妹妹「高小美」及魔法師「高史伯」的角色，拉近與兒童觀眾的距離，並透過多元的展示媒介與互動參與方式來引導學習，希望小朋友玩得很開心，也可以學到關於高雄的知識。",
+    "notice": "本館為5歲以上的小朋友打造一個適合親子同樂的體驗空間，以擬人化的比喻手法，將「高雄」化身為一位名叫「高小雄」的男孩，搭配妹妹「高小美」及魔法師「高史伯」的角色，拉近與兒童觀眾的距離，並透過多元的展示媒介與互動參與方式來引導學習，希望小朋友玩得很開心，也可以學到關於高雄的知識。",
     "organizer": "高雄市立歷史博物館",
     "isLiveApi": true,
     "sourceType": "culture_tw",
@@ -6881,7 +6847,7 @@
   },
   {
     "id": "culture-696e972926b3243b1ca0c0e5",
-    "title": "多元文化讀書會： 共讀���保再利用-針ㄉ好棒。手作創藝",
+    "title": "多元文化讀書會： 共讀環保再利用-針ㄉ好棒。手作創藝",
     "category": "solar_term",
     "region": "south",
     "county": "高雄市",
