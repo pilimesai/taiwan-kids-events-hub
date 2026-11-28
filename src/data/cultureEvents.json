@@ -1869,10 +1869,10 @@
     "county": "臺中市",
     "venue": "人類文化廳二樓",
     "address": "臺中市40453 臺中市北區館前路一號",
-    "eventStartDate": "2026-11-27",
+    "eventStartDate": "2026-11-28",
     "eventEndDate": "2028-12-31",
     "bookingStatus": "booking_open",
-    "bookingOpenDate": "2026-11-27 10:00",
+    "bookingOpenDate": "2026-11-28 10:00",
     "bookingPlatform": "營運科",
     "bookingUrl": "http://www.nmns.edu.tw/ch/visit/price.htm",
     "ticketPrice": "NT$ 全票100元，半票70元。",
@@ -1885,7 +1885,7 @@
     "image": "https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=900&q=80",
     "highlights": [
       "演出場館：人類文化廳二樓",
-      "場次時間：2026/11/27 09:00",
+      "場次時間：2026/11/28 09:00",
       "購票資訊：NT$ 全票100元，半票70元。",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
@@ -1903,10 +1903,10 @@
     "county": "臺南市",
     "venue": "藍晒圖文創園區",
     "address": "臺南市西門路一段６８９巷５９號",
-    "eventStartDate": "2026-11-28",
+    "eventStartDate": "2026-11-29",
     "eventEndDate": "2029-12-30",
     "bookingStatus": "booking_open",
-    "bookingOpenDate": "2026-11-28 10:00",
+    "bookingOpenDate": "2026-11-29 10:00",
     "bookingPlatform": "sujenbaby",
     "bookingUrl": "https://www.facebook.com/pg/juhauwanyi/events/",
     "ticketPrice": "NT$ 1000↑",
@@ -1919,7 +1919,7 @@
     "image": "https://cloud.culture.tw/e_new_upload/cms/image/A0/B0/C0/D8/E120/F482/d534ef80-bd64-4d22-8f8a-8d864d70748d.jpg",
     "highlights": [
       "演出場館：藍晒圖文創園區",
-      "場次時間：2026/11/28 00:00",
+      "場次時間：2026/11/29 00:00",
       "購票資訊：NT$ 1000↑",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
@@ -2229,7 +2229,7 @@
       "購票資訊：NT$ 殘障優待票+160;15人以上團體票+280;優待票+320;全票+350;美術相關科系學生+280",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
-    "notice": "朱銘美術館長期投入修護研究，2024年完成159件修護案例，包含國內外委託案，朱銘美術館自創館以來持續發展修復制度與研究技術，積極對應臺灣潮濕氣候所帶來的保存挑戰。2024年完成159件作品修護，包含新北市美術館、基隆市文化觀光局與新加坡Ho Bee Land等委託案，展現高度信任與修護團隊的專業實...",
+    "notice": "朱銘美術館長期投入修護研究，2024年完成159件修護案例，包含國內外委託案，朱銘美術館自創館��來持續發展修復制度與研究技術，積極對應臺灣潮濕氣候所帶來的保存挑戰。2024年完成159件作品修護，包含新北市美術館、基隆市文化觀光局與新加坡Ho Bee Land等委託案，展現高度信任與修護團隊的專業...",
     "organizer": "朱銘美術館",
     "isLiveApi": true,
     "sourceType": "culture_tw",
@@ -2433,7 +2433,7 @@
       "購票資訊：NT$ 全票+50;團體票（20人以上）+30;優待票+30;6 歲以上，未滿 12 歲兒童+25",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
-    "notice": "園區與台灣電力公司策劃一座結合電磁科學教育的璀璨電塔，搭配「電磁視界」特展開幕，在2017年平安夜開始帶大家一探電與磁��奧��！\r\n為何在以地震、地質為主題的園區要舉辦電學的特展呢？主要原因就來自於入口處的高壓電塔，過往大眾對於高壓電塔都認為是極度危險的設施，不只是高壓電，電磁波更是高得嚇人，因此...",
+    "notice": "園區與台灣電力公司策劃一座結合電磁科學教育的璀璨電塔，搭配「電磁視界」特展開幕，在2017年平安夜開始帶大家一探電與磁的奧妙！\r\n為何在以地震、地質為主題的園區要舉辦電學的特展呢？主要原因就來自於入口處的高壓電塔，過往大眾對於高壓電塔都認為是極度危險的設施，不只是高壓電，電磁波更是高得嚇人，因此許多...",
     "organizer": "國立自然科學博物館車籠埔斷層保存園區",
     "isLiveApi": true,
     "sourceType": "culture_tw",
@@ -3488,7 +3488,7 @@
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
     "notice": "111年3月1日「POP! POP! POP!流行音樂互動展」於高流中心音浪塔開展，透過「全民策展」與「南方在地」2大概念出發，共設7大展區，分別為從後台出發、好歌共鳴、樂音流域、走入發聲現場、走入流行影像、在地音樂能量、及美麗島旋律，更與知名鐵三角合作，提供最好的聲音品質。\r\n展演者︰前期規劃：B...",
-    "organizer": "高雄市政府",
+    "organizer": "高雄市政府文化局",
     "isLiveApi": true,
     "sourceType": "culture_tw",
     "sourceWebName": "全國藝文活動資訊系統"
@@ -3733,7 +3733,7 @@
   },
   {
     "id": "culture-6973eb0c26b32454e437c3ed",
-    "title": "桃園市土地公���化���常設展-202當伯公遇見土地公",
+    "title": "桃園市���地���文化館常設展-202當伯公遇見土地公",
     "category": "exhibition",
     "region": "north",
     "county": "桃園市",
@@ -4779,7 +4779,7 @@
       "公家免門票或藝文推廣自由入場",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
-    "notice": "集結舊事 鑑往知來──\r\n從福爾摩沙、打狗、鹽埕到駁二，自漁鹽、製糖、工業到藝文，將這一塊濱海地帶的人文歷史與核心價值，以各種創意手法濃縮在駁二「舊事倉庫」裡���\r\n以地洞影片為駁二歷史揭開序幕，帶我們回到三百年前的福爾摩沙小漁村，在海底洋流的空間氛圍中，打狗的發展一幕幕以新舊交融的影像出現眼前。...",
+    "notice": "集結舊事 鑑往知來──\r\n從福爾摩沙、打狗、鹽埕到駁二，自漁鹽、製糖、工業到藝文，將這一塊濱海地帶的人文歷史與核心價值，以各種創意手法濃縮在駁二「舊事倉庫」裡。\r\n以地洞影片為駁二歷史揭開序幕，帶我們回到三百年前的福爾摩沙小漁村，在海底洋流的空間氛圍中，打狗的發展一幕幕以新舊交融的影像出現眼前。站在...",
     "organizer": "高雄市政府文化局",
     "isLiveApi": true,
     "sourceType": "culture_tw",
@@ -5731,7 +5731,7 @@
       "公家免門票或藝文推廣自由入場",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
-    "notice": "童話故事文字雖簡潔、寓意卻深遠，廣泛多元的內容題材，深受各年齡層民眾喜愛。為推廣郵票之美及歷久彌新之童話寓���，���館特規劃「從前從前－繪說童話郵票特展」，期透過童趣的郵票、生動故事情節的繪本童書，讓大、小朋友一起擁抱童心，進入童話世界的奇幻想像，享受親子共讀的快樂時光。",
+    "notice": "童話故事文字雖簡潔、寓意卻深遠，廣泛多元的內容題材，深受各年齡層民眾喜愛。為推廣郵票之美及歷久彌新之童話寓言，本館特規劃「從前從前－繪說童話郵票特展」，期透過童趣的郵票、生動故事情節的繪本童書，讓大、小朋友一起擁抱童心，進入童話世界的奇幻想像，享受親子共讀的快樂時光。",
     "organizer": "郵政博物館",
     "isLiveApi": true,
     "sourceType": "culture_tw",
@@ -6144,6 +6144,40 @@
     "isLiveApi": true,
     "sourceType": "culture_tw",
     "sourceWebName": "JD Chen"
+  },
+  {
+    "id": "culture-6b09562026b3245efc7538b4",
+    "title": "人間有味是清歡",
+    "category": "exhibition",
+    "region": "north",
+    "county": "臺北市",
+    "venue": "第3展覽廳",
+    "address": "臺北市南海路四十七號",
+    "eventStartDate": "2026-12-16",
+    "eventEndDate": "2026-12-27",
+    "bookingStatus": "free_walkin",
+    "bookingOpenDate": "2026-12-16 10:00",
+    "bookingPlatform": "國立臺灣藝術教育館",
+    "bookingUrl": "https://www.arte.gov.tw/pro1_exh_now.asp?KeyID=4613",
+    "ticketPrice": "免費入場（免門票）",
+    "isFree": true,
+    "minAge": 0,
+    "maxAge": 99,
+    "ageLabel": "全年齡親子皆宜",
+    "indoorOutdoor": "indoor",
+    "indoorOutdoorLabel": "室內專業場館・風雨無阻",
+    "image": "https://cloud.culture.tw/e_new_upload/task/97b68b43-4653-4595-b7a0-a816818be7c5/57a5238d8aa5b8bbd4dd6d2ed0bd4e271ae69a61a174ffa43e03f57d583c917ee189284a03022eb7c7cf02d46e3bf9dc65b3ae88200945c307c9fc29599e5c55/2c0a1bc7679fb543ddaf86d71bec03c90cad9974.jpg",
+    "highlights": [
+      "演出場館：第3展覽廳",
+      "場次時間：2026/12/16 00:00",
+      "公家免門票或藝文推廣自由入場",
+      "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
+    ],
+    "notice": "人間有味是清歡。是創作者累積30多年畫筆生涯，堅持利用工作餘暇寄情藝術，展出有台灣鄉土溫情的兒童插畫、畫室裡的靜物寫生、旅途中的色彩光影，期望透過作品，邀您在繁華步調中放慢腳步，尋回生命最純粹的日常美好滋味。\n“Finding Joy in Life’s Simple Pleasures” refl...",
+    "organizer": "國立臺灣藝術教育館",
+    "isLiveApi": true,
+    "sourceType": "culture_tw",
+    "sourceWebName": "國立臺灣藝術教育館"
   },
   {
     "id": "culture-68950a2f26b324477c8a1474",
@@ -7105,10 +7139,10 @@
     "county": "高雄市",
     "venue": "內惟藝術中心",
     "address": "高雄市鼓山區馬卡道路329號",
-    "eventStartDate": "2026-11-27",
+    "eventStartDate": "2026-11-28",
     "eventEndDate": "2027-02-14",
     "bookingStatus": "booking_open",
-    "bookingOpenDate": "2026-11-27 10:00",
+    "bookingOpenDate": "2026-11-28 10:00",
     "bookingPlatform": "年代",
     "bookingUrl": "https://ticket.com.tw/Application/UTK02/UTK0201_.aspx?PRODUCT_ID=P1I7E1FQ",
     "ticketPrice": "NT$ 799",
@@ -7121,7 +7155,7 @@
     "image": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=900&q=80",
     "highlights": [
       "演出場館：內惟藝術中心",
-      "場次時間：2026/11/27 14:00",
+      "場次時間：2026/11/28 12:00",
       "購票資訊：NT$ 799",
       "資料來源：文化部 iCulture 全國藝文活動開放資料平台"
     ],
